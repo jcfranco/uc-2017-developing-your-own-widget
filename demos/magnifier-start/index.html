@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+
+  <title>Magnifying Glass Widget</title>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.4/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.4/"></script>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+
+  </style>
+
+  <script>
+    require([
+      "esri/WebScene",
+      "esri/views/SceneView",
+      "esri/widgets/Magnifier",
+      "dojo/domReady!"
+    ], function (
+      WebScene, SceneView, Magnifier
+    ) {
+
+      var scene = new WebScene({
+        portalItem: {
+          id: "c5ee5eb2730e4f86af82d548c820db07"
+        }
+      });
+
+      var view = new SceneView({
+        container: "viewDiv",
+        map: scene
+      });
+
+      var mag = new Magnifier({
+        view: view
+      });
+
+      view.ui.add(compass, "bottom-left");
+
+    });
+
+  </script>
+
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+</body>
+
+</html>
+
