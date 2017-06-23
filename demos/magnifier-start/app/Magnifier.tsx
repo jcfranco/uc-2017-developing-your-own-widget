@@ -1,42 +1,3 @@
-/**
- * The Compass widget indicates where north is in relation to the current view
- * {@link module:esri/views/MapView#rotation rotation}
- * or {@link module:esri/Camera#heading camera heading}. Clicking the compass
- * rotates the view to face north (heading = 0). This widget is added to a {@link module:esri/views/SceneView}
- * by default.
- *
- * ![Compass for Web Mercator and WGS84](../assets/img/apiref/widgets/compass.png)
- * ![Compass for other spatial references](../assets/img/apiref/widgets/compass-other-sr.png)
- *
- * You can use the view's {@link module:esri/views/ui/DefaultUI} to add the compass widget
- * to a 2D application via the {@link module:esri/views/MapView#ui ui} property on the view.
- * See the sample below.
- *
- * @example
- * var view = new MapView({
- *   container: "viewDiv",
- *   map: map
- * });
- *
- * var compass = new Compass({
- *   view: view
- * });
- *
- * // adds the compass to the top left corner of the MapView
- * view.ui.add(compass, "top-left");
- *
- * @module esri/widgets/Compass
- * @since 4.0
- *
- * @see [Compass.js (widget view)]({{ JSAPI_BOWER_URL }}/widgets/Compass.js)
- * @see [Compass.scss]({{ JSAPI_BOWER_URL }}/themes/base/widgets/_Compass.scss)
- * @see module:esri/widgets/Compass/CompassViewModel
- * @see [Sample - Adding the Compass widget to a MapView](../sample-code/widgets-compass-2d/index.html)
- * @see module:esri/views/ui/DefaultUI
- * @see module:esri/views/MapView
- * @see module:esri/views/SceneView
- * @see module:esri/Camera
- */
 /// <amd-dependency path="esri/core/tsSupport/declareExtendsHelper" name="__extends" />
 /// <amd-dependency path="esri/core/tsSupport/decorateHelper" name="__decorate" />
 
@@ -60,7 +21,7 @@ import Widget = require("esri/widgets/Widget");
 import CompassViewModel = require("esri/widgets/Compass/CompassViewModel");
 import View = require("esri/views/View");
 
-import * as i18n from "dojo/i18n!esri/widgets/Compass/nls/Compass";
+//import * as i18n from "dojo/i18n!esri/widgets/Compass/nls/Compass";
 
 const CSS = {
   base: "esri-compass esri-widget-button esri-widget",
@@ -190,12 +151,6 @@ class Compass extends declared(Widget) {
         onkeydown={this._reset}
         role="button"
         tabIndex={tabIndex}>
-        <span aria-hidden="true"
-          class={CSS.icon}
-          classes={dynamicIconClasses}
-          styles={this._toRotationTransform(orientation)}
-          title={i18n.reset} />
-        <span class={CSS.text}>{i18n.reset}</span>
       </div>
     );
   }
