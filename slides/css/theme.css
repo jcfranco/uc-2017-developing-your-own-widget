@@ -10,7 +10,7 @@ body {
 
 .reveal {
   font-family: "Avenir Next", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 32px;
+  font-size: 42px;
   font-weight: normal;
   color: #FFFFFF; }
 
@@ -49,13 +49,13 @@ body {
   word-wrap: break-word; }
 
 .reveal h1 {
-  font-size: 2.074em; }
+  font-size: 2.5em; }
 
 .reveal h2 {
-  font-size: 1.728em; }
+  font-size: 1.6em; }
 
 .reveal h3 {
-  font-size: 1.44em; }
+  font-size: 1.3em; }
 
 .reveal h4 {
   font-size: 1em; }
