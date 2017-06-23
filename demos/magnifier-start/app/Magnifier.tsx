@@ -143,7 +143,7 @@ class Compass extends declared(Widget) {
       [CSS.rotationIcon]: !showingCompass
     };
 
-    return;
+    return (<div />);
   }
 
   //--------------------------------------------------------------------------
