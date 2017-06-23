@@ -11,15 +11,11 @@ import {
 
 //import { Axes } from "esri/widgets/interfaces";
 
-interface Axes {
-  x?: number;
-  y?: number;
-  z?: number;
-}
-
 import Widget = require("esri/widgets/Widget");
-import CompassViewModel = require("esri/widgets/Compass/CompassViewModel");
+//import MagnifierViewModel = require("esri/widgets/Magnifier/MagnifierViewModel");
 import View = require("esri/views/View");
+
+import Layer = require("esri/layers/Layer");
 
 //import * as i18n from "dojo/i18n!esri/widgets/Compass/nls/Compass";
 
@@ -35,12 +31,8 @@ const CSS = {
   disabled: "esri-disabled"
 };
 
-interface TransformStyle {
-  transform: string;
-}
-
-@subclass("esri.widgets.Compass")
-class Compass extends declared(Widget) {
+@subclass("esri.widgets.Magnifier")
+class Magnifier extends declared(Widget) {
 
   //--------------------------------------------------------------------------
   //
@@ -48,22 +40,20 @@ class Compass extends declared(Widget) {
   //
   //--------------------------------------------------------------------------
 
-  /**
-   * @constructor
-   * @alias module:esri/widgets/Compass
-   * @extends module:esri/widgets/Widget
-   * @param {Object} [properties] - See the [properties](#properties-summary) for a list of all the properties
-   *                                that may be passed into the constructor.
-   */
   constructor(params?: any) {
     super();
   }
+
+  postInitialize(){}
 
   //--------------------------------------------------------------------------
   //
   //  Properties
   //
   //--------------------------------------------------------------------------
+
+  @aliasOf("viewModel.layer")
+  layer: Layer = null;
 
   //----------------------------------
   //  view
@@ -85,25 +75,14 @@ class Compass extends declared(Widget) {
   //  viewModel
   //----------------------------------
 
-  /**
-   * The view model for this widget. This is a class that contains all the logic
-   * (properties and methods) that controls this widget's behavior. See the
-   * {@link module:esri/widgets/Compass/CompassViewModel} class to access
-   * all properties and methods on the widget.
-   *
-   * @name viewModel
-   * @instance
-   * @type {module:esri/widgets/Compass/CompassViewModel}
-   * @autocast
-   */
-  @property({
-    type: CompassViewModel
-  })
-  @renderable([
-    "viewModel.orientation",
-    "viewModel.state"
-  ])
-  viewModel: CompassViewModel = new CompassViewModel();
+  // @property({
+  //   type: CompassViewModel
+  // })
+  // @renderable([
+  //   "viewModel.orientation",
+  //   "viewModel.state"
+  // ])
+  // viewModel: CompassViewModel = new CompassViewModel();
 
   //--------------------------------------------------------------------------
   //
@@ -111,38 +90,7 @@ class Compass extends declared(Widget) {
   //
   //--------------------------------------------------------------------------
 
-  /**
-   * If working in a {@link module:esri/views/MapView}, sets the view's
-   * {@link module:esri/views/MapView#rotation rotation} to `0`. If working in a
-   * {@link module:esri/views/SceneView}, sets the camera's
-   * {@link module:esri/Camera#heading heading} to `0`. This method is executed each
-   * time the {@link module:esri/widgets/Compass} is clicked.
-   *
-   * @method
-   */
-  @aliasOf("viewModel.reset")
-  reset(): void { }
-
   render() {
-    const orientation = this.viewModel.orientation;
-    const state = this.viewModel.state;
-
-    const disabled = state === "disabled",
-      showNorth = state === "rotation" ? "rotation" : "compass", // compass is also shown when disabled
-      showingCompass = showNorth === "compass";
-
-    const tabIndex = disabled ? -1 : 0;
-
-    const dynamicRootClasses = {
-      [CSS.disabled]: disabled,
-      [CSS.interactive]: !disabled
-    };
-
-    const dynamicIconClasses = {
-      [CSS.northIcon]: showingCompass,
-      [CSS.rotationIcon]: !showingCompass
-    };
-
     return (<div />);
   }
 
@@ -152,17 +100,17 @@ class Compass extends declared(Widget) {
   //
   //--------------------------------------------------------------------------
 
-  @accessibleHandler()
-  private _reset() {
-    this.reset();
-  }
+  // @accessibleHandler()
+  // private _reset() {
+  //   this.reset();
+  // }
 
-  private _toRotationTransform(orientation: Axes): TransformStyle {
-    return {
-      transform: `rotateZ(${orientation.z}deg)`
-    };
-  }
+  // private _toRotationTransform(orientation: Axes): TransformStyle {
+  //   return {
+  //     transform: `rotateZ(${orientation.z}deg)`
+  //   };
+  // }
 
 }
 
-export = Compass;
+export = Magnifier;

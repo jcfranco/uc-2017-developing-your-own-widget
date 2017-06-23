@@ -16,7 +16,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/core/tsSupport/decorateHelper", "esri/core/accessorSupport/decorators", "esri/widgets/support/widget", "esri/widgets/Widget", "esri/widgets/Compass/CompassViewModel"], function (require, exports, __extends, __decorate, decorators_1, widget_1, Widget, CompassViewModel) {
+define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/core/tsSupport/decorateHelper", "esri/core/accessorSupport/decorators", "esri/widgets/support/widget", "esri/widgets/Widget"], function (require, exports, __extends, __decorate, decorators_1, widget_1, Widget) {
     "use strict";
     //import * as i18n from "dojo/i18n!esri/widgets/Compass/nls/Compass";
     var CSS = {
@@ -29,27 +29,21 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
         interactive: "esri-interactive",
         disabled: "esri-disabled"
     };
-    var Compass = (function (_super) {
-        __extends(Compass, _super);
+    var Magnifier = (function (_super) {
+        __extends(Magnifier, _super);
         //--------------------------------------------------------------------------
         //
         //  Lifecycle
         //
         //--------------------------------------------------------------------------
-        /**
-         * @constructor
-         * @alias module:esri/widgets/Compass
-         * @extends module:esri/widgets/Widget
-         * @param {Object} [properties] - See the [properties](#properties-summary) for a list of all the properties
-         *                                that may be passed into the constructor.
-         */
-        function Compass(params) {
+        function Magnifier(params) {
             var _this = _super.call(this) || this;
             //--------------------------------------------------------------------------
             //
             //  Properties
             //
             //--------------------------------------------------------------------------
+            _this.layer = null;
             //----------------------------------
             //  view
             //----------------------------------
@@ -63,91 +57,39 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
              * @type {module:esri/views/MapView | module:esri/views/SceneView}
              */
             _this.view = null;
-            //----------------------------------
-            //  viewModel
-            //----------------------------------
-            /**
-             * The view model for this widget. This is a class that contains all the logic
-             * (properties and methods) that controls this widget's behavior. See the
-             * {@link module:esri/widgets/Compass/CompassViewModel} class to access
-             * all properties and methods on the widget.
-             *
-             * @name viewModel
-             * @instance
-             * @type {module:esri/widgets/Compass/CompassViewModel}
-             * @autocast
-             */
-            _this.viewModel = new CompassViewModel();
             return _this;
         }
+        Magnifier.prototype.postInitialize = function () { };
+        //----------------------------------
+        //  viewModel
+        //----------------------------------
+        // @property({
+        //   type: CompassViewModel
+        // })
+        // @renderable([
+        //   "viewModel.orientation",
+        //   "viewModel.state"
+        // ])
+        // viewModel: CompassViewModel = new CompassViewModel();
         //--------------------------------------------------------------------------
         //
         //  Public Methods
         //
         //--------------------------------------------------------------------------
-        /**
-         * If working in a {@link module:esri/views/MapView}, sets the view's
-         * {@link module:esri/views/MapView#rotation rotation} to `0`. If working in a
-         * {@link module:esri/views/SceneView}, sets the camera's
-         * {@link module:esri/Camera#heading heading} to `0`. This method is executed each
-         * time the {@link module:esri/widgets/Compass} is clicked.
-         *
-         * @method
-         */
-        Compass.prototype.reset = function () { };
-        Compass.prototype.render = function () {
-            var orientation = this.viewModel.orientation;
-            var state = this.viewModel.state;
-            var disabled = state === "disabled", showNorth = state === "rotation" ? "rotation" : "compass", // compass is also shown when disabled
-            showingCompass = showNorth === "compass";
-            var tabIndex = disabled ? -1 : 0;
-            var dynamicRootClasses = (_a = {},
-                _a[CSS.disabled] = disabled,
-                _a[CSS.interactive] = !disabled,
-                _a);
-            var dynamicIconClasses = (_b = {},
-                _b[CSS.northIcon] = showingCompass,
-                _b[CSS.rotationIcon] = !showingCompass,
-                _b);
-            return;
-            var _a, _b;
+        Magnifier.prototype.render = function () {
+            return (widget_1.tsx("div", null));
         };
-        //--------------------------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //--------------------------------------------------------------------------
-        Compass.prototype._reset = function () {
-            this.reset();
-        };
-        Compass.prototype._toRotationTransform = function (orientation) {
-            return {
-                transform: "rotateZ(" + orientation.z + "deg)"
-            };
-        };
-        return Compass;
+        return Magnifier;
     }(decorators_1.declared(Widget)));
     __decorate([
+        decorators_1.aliasOf("viewModel.layer")
+    ], Magnifier.prototype, "layer", void 0);
+    __decorate([
         decorators_1.aliasOf("viewModel.view")
-    ], Compass.prototype, "view", void 0);
-    __decorate([
-        decorators_1.property({
-            type: CompassViewModel
-        }),
-        widget_1.renderable([
-            "viewModel.orientation",
-            "viewModel.state"
-        ])
-    ], Compass.prototype, "viewModel", void 0);
-    __decorate([
-        decorators_1.aliasOf("viewModel.reset")
-    ], Compass.prototype, "reset", null);
-    __decorate([
-        widget_1.accessibleHandler()
-    ], Compass.prototype, "_reset", null);
-    Compass = __decorate([
-        decorators_1.subclass("esri.widgets.Compass")
-    ], Compass);
-    return Compass;
+    ], Magnifier.prototype, "view", void 0);
+    Magnifier = __decorate([
+        decorators_1.subclass("esri.widgets.Magnifier")
+    ], Magnifier);
+    return Magnifier;
 });
 //# sourceMappingURL=Magnifier.js.map

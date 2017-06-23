@@ -8,6 +8,19 @@
   <title>Magnifying Glass Widget</title>
 
   <link rel="stylesheet" href="https://js.arcgis.com/4.4/esri/css/main.css">
+
+  <script>
+    var href = location.href;
+    var demoLocation = href.slice(0, href.lastIndexOf("/"));
+    var dojoConfig = {
+      async: true,
+      packages: [{
+        name: "demo",
+        location: demoLocation + "/app"
+      }]
+    };
+
+  </script>
   <script src="https://js.arcgis.com/4.4/"></script>
 
   <style>
@@ -24,30 +37,40 @@
 
   <script>
     require([
-      "esri/WebScene",
-      "esri/views/SceneView",
-      "esri/widgets/Magnifier",
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/layers/ImageryLayer",
+      "demo/Magnifier",
       "dojo/domReady!"
     ], function (
-      WebScene, SceneView, Magnifier
+      Map,
+      MapView,
+      ImageryLayer,
+      Magnifier
     ) {
 
-      var scene = new WebScene({
-        portalItem: {
-          id: "c5ee5eb2730e4f86af82d548c820db07"
-        }
+      var map = new Map({
+        basemap: "dark-gray"
       });
 
-      var view = new SceneView({
+      var layer = new ImageryLayer({
+        url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer",
+        format: "jpgpng"
+      });
+
+      var view = new MapView({
         container: "viewDiv",
-        map: scene
+        zoom: 14,
+        center: [-116.51327133175782, 33.82029520464912],
+        map: map
       });
 
       var mag = new Magnifier({
-        view: view
+        view: view,
+        layer: layer
       });
 
-      view.ui.add(compass, "bottom-left");
+      view.ui.add(mag, "bottom-left");
 
     });
 
