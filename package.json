@@ -1,7 +1,11 @@
 {
   "name": "developing-your-own-widget-uc-2017",
   "version": "1.0.0",
+  "description": "Demos for the 'Developing your own widget' session (Esri UC 2017)",
   "private": true,
+  "scripts": {
+    "postinstall": "tsc"
+  },
   "dependencies": {
     "highlightjs": "^9.10.0",
     "reveal.js": "^3.5.0"

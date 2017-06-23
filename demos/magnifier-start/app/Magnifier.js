@@ -1,57 +1,24 @@
-/**
- * The Compass widget indicates where north is in relation to the current view
- * {@link module:esri/views/MapView#rotation rotation}
- * or {@link module:esri/Camera#heading camera heading}. Clicking the compass
- * rotates the view to face north (heading = 0). This widget is added to a {@link module:esri/views/SceneView}
- * by default.
- *
- * ![Compass for Web Mercator and WGS84](../assets/img/apiref/widgets/compass.png)
- * ![Compass for other spatial references](../assets/img/apiref/widgets/compass-other-sr.png)
- *
- * You can use the view's {@link module:esri/views/ui/DefaultUI} to add the compass widget
- * to a 2D application via the {@link module:esri/views/MapView#ui ui} property on the view.
- * See the sample below.
- *
- * @example
- * var view = new MapView({
- *   container: "viewDiv",
- *   map: map
- * });
- *
- * var compass = new Compass({
- *   view: view
- * });
- *
- * // adds the compass to the top left corner of the MapView
- * view.ui.add(compass, "top-left");
- *
- * @module esri/widgets/Compass
- * @since 4.0
- *
- * @see [Compass.js (widget view)]({{ JSAPI_BOWER_URL }}/widgets/Compass.js)
- * @see [Compass.scss]({{ JSAPI_BOWER_URL }}/themes/base/widgets/_Compass.scss)
- * @see module:esri/widgets/Compass/CompassViewModel
- * @see [Sample - Adding the Compass widget to a MapView](../sample-code/widgets-compass-2d/index.html)
- * @see module:esri/views/ui/DefaultUI
- * @see module:esri/views/MapView
- * @see module:esri/views/SceneView
- * @see module:esri/Camera
- */
 /// <amd-dependency path="esri/core/tsSupport/declareExtendsHelper" name="__extends" />
 /// <amd-dependency path="esri/core/tsSupport/decorateHelper" name="__decorate" />
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/core/tsSupport/decorateHelper", "esri/core/accessorSupport/decorators", "esri/widgets/support/widget", "esri/widgets/Widget", "esri/widgets/Compass/CompassViewModel", "dojo/i18n!esri/widgets/Compass/nls/Compass"], function (require, exports, __extends, __decorate, decorators_1, widget_1, Widget, CompassViewModel, i18n) {
+define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/core/tsSupport/decorateHelper", "esri/core/accessorSupport/decorators", "esri/widgets/support/widget", "esri/widgets/Widget", "esri/widgets/Compass/CompassViewModel"], function (require, exports, __extends, __decorate, decorators_1, widget_1, Widget, CompassViewModel) {
     "use strict";
+    //import * as i18n from "dojo/i18n!esri/widgets/Compass/nls/Compass";
     var CSS = {
         base: "esri-compass esri-widget-button esri-widget",
         text: "esri-icon-font-fallback-text",
@@ -142,9 +109,7 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
                 _b[CSS.northIcon] = showingCompass,
                 _b[CSS.rotationIcon] = !showingCompass,
                 _b);
-            return (widget_1.jsxFactory.createElement("div", { bind: this, class: CSS.base, classes: dynamicRootClasses, onclick: this._reset, onkeydown: this._reset, role: "button", tabIndex: tabIndex },
-                widget_1.jsxFactory.createElement("span", { "aria-hidden": "true", class: CSS.icon, classes: dynamicIconClasses, styles: this._toRotationTransform(orientation), title: i18n.reset }),
-                widget_1.jsxFactory.createElement("span", { class: CSS.text }, i18n.reset)));
+            return;
             var _a, _b;
         };
         //--------------------------------------------------------------------------
@@ -185,4 +150,4 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
     ], Compass);
     return Compass;
 });
-//# sourceMappingURL=VintageCompass.js.map
+//# sourceMappingURL=Magnifier.js.map

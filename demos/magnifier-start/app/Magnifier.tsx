@@ -4,7 +4,7 @@
 import { aliasOf, subclass, property, declared } from "esri/core/accessorSupport/decorators";
 
 import {
-  jsxFactory,
+  tsx,
   renderable,
   accessibleHandler
 } from "esri/widgets/support/widget";
@@ -143,16 +143,7 @@ class Compass extends declared(Widget) {
       [CSS.rotationIcon]: !showingCompass
     };
 
-    return (
-      <div bind={this}
-        class={CSS.base}
-        classes={dynamicRootClasses}
-        onclick={this._reset}
-        onkeydown={this._reset}
-        role="button"
-        tabIndex={tabIndex}>
-      </div>
-    );
+    return;
   }
 
   //--------------------------------------------------------------------------
