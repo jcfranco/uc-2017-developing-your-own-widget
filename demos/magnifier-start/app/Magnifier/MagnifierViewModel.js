@@ -135,7 +135,8 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
             if (!view || !magView) {
                 return;
             }
-            magView.scale = view.scale;
+            magView.scale = view.scale - 1000000; // todo: figure out what to do here
+            magView.center = view.center;
         };
         MagnifierViewModel.prototype._layerChange = function (newLayer, oldLayer) {
             var map = this.get("magnifierView.map");

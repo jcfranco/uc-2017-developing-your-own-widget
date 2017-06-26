@@ -177,7 +177,8 @@ class MagnifierViewModel extends declared(Accessor) {
       return;
     }
 
-    magView.scale = view.scale * 1.5;
+    magView.scale = view.scale - 1000000; // todo: figure out what to do here
+    magView.center = view.center;
   }
 
   private _layerChange(newLayer: Layer, oldLayer: Layer): void {
