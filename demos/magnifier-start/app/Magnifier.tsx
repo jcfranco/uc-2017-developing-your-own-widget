@@ -11,27 +11,29 @@ import {
 
 //import { Axes } from "esri/widgets/interfaces";
 
+import watchUtils = require("esri/core/watchUtils");
+
 import Widget = require("esri/widgets/Widget");
-//import MagnifierViewModel = require("esri/widgets/Magnifier/MagnifierViewModel");
-import View = require("esri/views/View");
+import MagnifierViewModel = require("./Magnifier/MagnifierViewModel");
+
+import MapView = require("esri/views/MapView");
+import SceneView = require("esri/views/SceneView");
 
 import Layer = require("esri/layers/Layer");
 
+// todo
 //import * as i18n from "dojo/i18n!esri/widgets/Compass/nls/Compass";
 
 const CSS = {
-  base: "esri-compass esri-widget-button esri-widget",
-  text: "esri-icon-font-fallback-text",
-  icon: "esri-compass__icon",
-  rotationIcon: "esri-icon-dial",
-  northIcon: "esri-icon-compass",
+  base: "esri-magnifier esri-widget",
+  magnifierView: "esri-magnfiier-view",
 
   // common
   interactive: "esri-interactive",
   disabled: "esri-disabled"
 };
 
-@subclass("esri.widgets.Magnifier")
+@subclass("demo.Magnifier")
 class Magnifier extends declared(Widget) {
 
   //--------------------------------------------------------------------------
@@ -44,7 +46,11 @@ class Magnifier extends declared(Widget) {
     super();
   }
 
-  postInitialize(){}
+  postInitialize() {
+    this.own([
+      watchUtils.init(this, "viewModel.magnifierView", magnifierView => this._magnifierViewChange(magnifierView))
+    ]);
+  }
 
   //--------------------------------------------------------------------------
   //
@@ -52,6 +58,15 @@ class Magnifier extends declared(Widget) {
   //
   //--------------------------------------------------------------------------
 
+  //----------------------------------
+  //  enabled
+  //----------------------------------
+  @aliasOf("viewModel.enabled")
+  enabled: boolean = null;
+
+  //----------------------------------
+  //  layer
+  //----------------------------------
   @aliasOf("viewModel.layer")
   layer: Layer = null;
 
@@ -59,30 +74,20 @@ class Magnifier extends declared(Widget) {
   //  view
   //----------------------------------
 
-  /**
-   * The view in which the Compass obtains and indicates camera
-   * {@link module:esri/Camera#heading heading}, using a (SceneView) or
-   * {@link module:esri/views/Mapview#rotation rotation} (MapView).
-   *
-   * @name view
-   * @instance
-   * @type {module:esri/views/MapView | module:esri/views/SceneView}
-   */
   @aliasOf("viewModel.view")
-  view: View = null;
+  view: MapView | SceneView = null;
 
   //----------------------------------
   //  viewModel
   //----------------------------------
 
-  // @property({
-  //   type: CompassViewModel
-  // })
-  // @renderable([
-  //   "viewModel.orientation",
-  //   "viewModel.state"
-  // ])
-  // viewModel: CompassViewModel = new CompassViewModel();
+  @property({
+    type: MagnifierViewModel
+  })
+  @renderable([
+    "viewModel.magnifierView"
+  ])
+  viewModel: MagnifierViewModel = new MagnifierViewModel();
 
   //--------------------------------------------------------------------------
   //
@@ -100,17 +105,25 @@ class Magnifier extends declared(Widget) {
   //
   //--------------------------------------------------------------------------
 
-  // @accessibleHandler()
-  // private _reset() {
-  //   this.reset();
-  // }
+  _magnifierViewChange(magView: MapView | SceneView) {
+    if (!magView) {
+      return;
+    }
 
-  // private _toRotationTransform(orientation: Axes): TransformStyle {
-  //   return {
-  //     transform: `rotateZ(${orientation.z}deg)`
-  //   };
-  // }
+    const magViewNode = magView.get<HTMLElement>("container");
+    const viewNode = this.get<HTMLElement>("view.root");
 
+    if (!viewNode) {
+      return;
+    }
+
+    magViewNode.classList.add(CSS.magnifierView);
+    viewNode.appendChild(magViewNode);
+    const magViewSurface = magView.get<HTMLElement>("surface");
+
+    const clip = this.enabled ? "rect(0px 250px 250px 0px)" : "auto";
+    magViewSurface.style.clip = clip;
+  }
 }
 
 export = Magnifier;

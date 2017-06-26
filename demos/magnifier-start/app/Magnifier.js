@@ -16,15 +16,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/core/tsSupport/decorateHelper", "esri/core/accessorSupport/decorators", "esri/widgets/support/widget", "esri/widgets/Widget"], function (require, exports, __extends, __decorate, decorators_1, widget_1, Widget) {
+define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/core/tsSupport/decorateHelper", "esri/core/accessorSupport/decorators", "esri/widgets/support/widget", "esri/core/watchUtils", "esri/widgets/Widget", "./Magnifier/MagnifierViewModel"], function (require, exports, __extends, __decorate, decorators_1, widget_1, watchUtils, Widget, MagnifierViewModel) {
     "use strict";
+    // todo
     //import * as i18n from "dojo/i18n!esri/widgets/Compass/nls/Compass";
     var CSS = {
-        base: "esri-compass esri-widget-button esri-widget",
-        text: "esri-icon-font-fallback-text",
-        icon: "esri-compass__icon",
-        rotationIcon: "esri-icon-dial",
-        northIcon: "esri-icon-compass",
+        base: "esri-magnifier esri-widget",
+        magnifierView: "esri-magnfiier-view",
         // common
         interactive: "esri-interactive",
         disabled: "esri-disabled"
@@ -43,34 +41,30 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
             //  Properties
             //
             //--------------------------------------------------------------------------
+            //----------------------------------
+            //  enabled
+            //----------------------------------
+            _this.enabled = null;
+            //----------------------------------
+            //  layer
+            //----------------------------------
             _this.layer = null;
             //----------------------------------
             //  view
             //----------------------------------
-            /**
-             * The view in which the Compass obtains and indicates camera
-             * {@link module:esri/Camera#heading heading}, using a (SceneView) or
-             * {@link module:esri/views/Mapview#rotation rotation} (MapView).
-             *
-             * @name view
-             * @instance
-             * @type {module:esri/views/MapView | module:esri/views/SceneView}
-             */
             _this.view = null;
+            //----------------------------------
+            //  viewModel
+            //----------------------------------
+            _this.viewModel = new MagnifierViewModel();
             return _this;
         }
-        Magnifier.prototype.postInitialize = function () { };
-        //----------------------------------
-        //  viewModel
-        //----------------------------------
-        // @property({
-        //   type: CompassViewModel
-        // })
-        // @renderable([
-        //   "viewModel.orientation",
-        //   "viewModel.state"
-        // ])
-        // viewModel: CompassViewModel = new CompassViewModel();
+        Magnifier.prototype.postInitialize = function () {
+            var _this = this;
+            this.own([
+                watchUtils.init(this, "viewModel.magnifierView", function (magnifierView) { return _this._magnifierViewChange(magnifierView); })
+            ]);
+        };
         //--------------------------------------------------------------------------
         //
         //  Public Methods
@@ -79,16 +73,47 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
         Magnifier.prototype.render = function () {
             return (widget_1.tsx("div", null));
         };
+        //--------------------------------------------------------------------------
+        //
+        //  Private Methods
+        //
+        //--------------------------------------------------------------------------
+        Magnifier.prototype._magnifierViewChange = function (magView) {
+            if (!magView) {
+                return;
+            }
+            var magViewNode = magView.get("container");
+            var viewNode = this.get("view.root");
+            if (!viewNode) {
+                return;
+            }
+            magViewNode.classList.add(CSS.magnifierView);
+            viewNode.appendChild(magViewNode);
+            var magViewSurface = magView.get("surface");
+            var clip = this.enabled ? "rect(0px 250px 250px 0px)" : "auto";
+            magViewSurface.style.clip = clip;
+        };
         return Magnifier;
     }(decorators_1.declared(Widget)));
+    __decorate([
+        decorators_1.aliasOf("viewModel.enabled")
+    ], Magnifier.prototype, "enabled", void 0);
     __decorate([
         decorators_1.aliasOf("viewModel.layer")
     ], Magnifier.prototype, "layer", void 0);
     __decorate([
         decorators_1.aliasOf("viewModel.view")
     ], Magnifier.prototype, "view", void 0);
+    __decorate([
+        decorators_1.property({
+            type: MagnifierViewModel
+        }),
+        widget_1.renderable([
+            "viewModel.magnifierView"
+        ])
+    ], Magnifier.prototype, "viewModel", void 0);
     Magnifier = __decorate([
-        decorators_1.subclass("esri.widgets.Magnifier")
+        decorators_1.subclass("demo.Magnifier")
     ], Magnifier);
     return Magnifier;
 });
