@@ -26,7 +26,7 @@ import Layer = require("esri/layers/Layer");
 
 const CSS = {
   base: "esri-magnifier esri-widget",
-  magnifierView: "esri-magnfiier-view",
+  magnifierView: "esri-magnifier-view",
 
   // common
   interactive: "esri-interactive",
@@ -121,7 +121,7 @@ class Magnifier extends declared(Widget) {
     viewNode.insertBefore(magViewNode, this.view.ui.container);
 
     const magViewSurface = magView.get<HTMLElement>("surface");
-    const clipPath = this.enabled ? "circle(150px at 50% 50%)" : "auto";
+    const clipPath = this.enabled ? "circle(150px at 50% 50%)" : "none";
     magViewSurface.style.clipPath = clipPath;
   }
 }

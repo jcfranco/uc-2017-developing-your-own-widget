@@ -22,7 +22,7 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
     //import * as i18n from "dojo/i18n!esri/widgets/Compass/nls/Compass";
     var CSS = {
         base: "esri-magnifier esri-widget",
-        magnifierView: "esri-magnfiier-view",
+        magnifierView: "esri-magnifier-view",
         // common
         interactive: "esri-interactive",
         disabled: "esri-disabled"
@@ -90,7 +90,7 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
             magViewNode.classList.add(CSS.magnifierView);
             viewNode.insertBefore(magViewNode, this.view.ui.container);
             var magViewSurface = magView.get("surface");
-            var clipPath = this.enabled ? "circle(150px at 50% 50%)" : "auto";
+            var clipPath = this.enabled ? "circle(150px at 50% 50%)" : "none";
             magViewSurface.style.clipPath = clipPath;
         };
         return Magnifier;
