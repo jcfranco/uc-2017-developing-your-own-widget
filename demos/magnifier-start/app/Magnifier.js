@@ -90,7 +90,7 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
             magViewNode.classList.add(CSS.magnifierView);
             viewNode.insertBefore(magViewNode, this.view.ui.container);
             var magViewSurface = magView.get("surface");
-            var clip = this.enabled ? "rect(0px 250px 250px 0px)" : "auto";
+            var clip = this.enabled ? "rect(250px 500px 500px 250px)" : "auto";
             magViewSurface.style.clip = clip;
         };
         return Magnifier;

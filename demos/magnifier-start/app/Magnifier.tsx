@@ -121,7 +121,7 @@ class Magnifier extends declared(Widget) {
     viewNode.insertBefore(magViewNode, this.view.ui.container);
 
     const magViewSurface = magView.get<HTMLElement>("surface");
-    const clip = this.enabled ? "rect(0px 250px 250px 0px)" : "auto";
+    const clip = this.enabled ? "rect(250px 500px 500px 250px)" : "auto";
     magViewSurface.style.clip = clip;
   }
 }
