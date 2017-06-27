@@ -144,7 +144,6 @@ class MagnifierViewModel extends declared(Accessor) {
 
     const viewOptions = {
       container: document.createElement("div"),
-      popup: false,
       ui: {
         components: components
       },

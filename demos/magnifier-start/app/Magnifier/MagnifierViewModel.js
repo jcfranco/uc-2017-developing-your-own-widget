@@ -110,7 +110,6 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
             var components = [];
             var viewOptions = {
                 container: document.createElement("div"),
-                popup: false,
                 ui: {
                     components: components
                 },
@@ -151,25 +150,25 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
                 map.add(newLayer);
             }
         };
+        __decorate([
+            decorators_1.property()
+        ], MagnifierViewModel.prototype, "enabled", void 0);
+        __decorate([
+            decorators_1.property()
+        ], MagnifierViewModel.prototype, "layer", void 0);
+        __decorate([
+            decorators_1.property({
+                readOnly: true
+            })
+        ], MagnifierViewModel.prototype, "magnifierView", void 0);
+        __decorate([
+            decorators_1.property()
+        ], MagnifierViewModel.prototype, "view", void 0);
+        MagnifierViewModel = __decorate([
+            decorators_1.subclass("demo.MagnifierViewModel")
+        ], MagnifierViewModel);
         return MagnifierViewModel;
     }(decorators_1.declared(Accessor)));
-    __decorate([
-        decorators_1.property()
-    ], MagnifierViewModel.prototype, "enabled", void 0);
-    __decorate([
-        decorators_1.property()
-    ], MagnifierViewModel.prototype, "layer", void 0);
-    __decorate([
-        decorators_1.property({
-            readOnly: true
-        })
-    ], MagnifierViewModel.prototype, "magnifierView", void 0);
-    __decorate([
-        decorators_1.property()
-    ], MagnifierViewModel.prototype, "view", void 0);
-    MagnifierViewModel = __decorate([
-        decorators_1.subclass("demo.MagnifierViewModel")
-    ], MagnifierViewModel);
     return MagnifierViewModel;
 });
 //# sourceMappingURL=MagnifierViewModel.js.map

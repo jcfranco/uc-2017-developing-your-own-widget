@@ -26,11 +26,9 @@ import Layer = require("esri/layers/Layer");
 
 const CSS = {
   base: "esri-magnifier esri-widget",
-  magnifierView: "esri-magnifier-view",
-
-  // common
-  interactive: "esri-interactive",
-  disabled: "esri-disabled"
+  handle: "esri-magnifier__handle",
+  magnifierView: "esri-magnifier__view",
+  magnifierViewHidden: "esri-magnifier__view--hidden"
 };
 
 @subclass("demo.Magnifier")
@@ -48,7 +46,8 @@ class Magnifier extends declared(Widget) {
 
   postInitialize() {
     this.own([
-      watchUtils.init(this, "viewModel.magnifierView", magnifierView => this._magnifierViewChange(magnifierView))
+      watchUtils.init(this, "viewModel.magnifierView", magnifierView => this._magnifierViewChange(magnifierView)),
+      watchUtils.init(this, "viewModel.enabled", enabled => this._enabledChange(enabled))
     ]);
   }
 
@@ -61,6 +60,7 @@ class Magnifier extends declared(Widget) {
   //----------------------------------
   //  enabled
   //----------------------------------
+  @renderable()
   @aliasOf("viewModel.enabled")
   enabled: boolean = null;
 
@@ -95,8 +95,16 @@ class Magnifier extends declared(Widget) {
   //
   //--------------------------------------------------------------------------
 
-  render() {
-    return (<div />);
+  render(): any {
+    const handleNode = this.enabled ? (
+      <div class={CSS.handle}></div>
+    ) : null;
+
+    const containerNode = (
+      <div class={CSS.base}>{handleNode}</div>
+    );
+
+    return containerNode;
   }
 
   //--------------------------------------------------------------------------
@@ -105,7 +113,19 @@ class Magnifier extends declared(Widget) {
   //
   //--------------------------------------------------------------------------
 
-  _magnifierViewChange(magView: MapView | SceneView) {
+  _enabledChange(enabled: boolean) : void {
+    const magViewNode = this.get<HTMLElement>("viewModel.magnifierView.container");
+
+    if (!magViewNode) {
+      return;
+    }
+    
+    !enabled ?
+      magViewNode.classList.add(CSS.magnifierViewHidden) :
+      magViewNode.classList.remove(CSS.magnifierViewHidden);
+  }
+
+  _magnifierViewChange(magView: MapView | SceneView): void {
     if (!magView) {
       return;
     }
@@ -118,6 +138,7 @@ class Magnifier extends declared(Widget) {
     }
 
     magViewNode.classList.add(CSS.magnifierView);
+    this._enabledChange(this.enabled);
     viewNode.insertBefore(magViewNode, this.view.ui.container);
 
     const magViewSurface = magView.get<HTMLElement>("surface");

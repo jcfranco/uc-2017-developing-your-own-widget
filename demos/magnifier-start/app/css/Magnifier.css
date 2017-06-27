@@ -1,4 +1,4 @@
-.esri-magnifier-view {
+.esri-magnifier__view {
   width: 100%;
   height: 100%;
   margin: 0;
@@ -7,16 +7,19 @@
   overflow: hidden;
 }
 
-.esri-magnifier-view:before {
-  content: '';
+.esri-magnifier__view--hidden {
+  display: none;
+}
+
+.esri-magnifier__handle {
   display: block;
   position: absolute;
   border: 2px solid #fff;
   width: 300px;
   height: 300px;
+  background: transparent;
   margin: -152px 0 0 -152px;
   top: 50%;
   left: 50%;
   border-radius: 50%;
 }
-

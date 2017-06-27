@@ -22,10 +22,9 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
     //import * as i18n from "dojo/i18n!esri/widgets/Compass/nls/Compass";
     var CSS = {
         base: "esri-magnifier esri-widget",
-        magnifierView: "esri-magnifier-view",
-        // common
-        interactive: "esri-interactive",
-        disabled: "esri-disabled"
+        handle: "esri-magnifier__handle",
+        magnifierView: "esri-magnifier__view",
+        magnifierViewHidden: "esri-magnifier__view--hidden"
     };
     var Magnifier = (function (_super) {
         __extends(Magnifier, _super);
@@ -62,7 +61,8 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
         Magnifier.prototype.postInitialize = function () {
             var _this = this;
             this.own([
-                watchUtils.init(this, "viewModel.magnifierView", function (magnifierView) { return _this._magnifierViewChange(magnifierView); })
+                watchUtils.init(this, "viewModel.magnifierView", function (magnifierView) { return _this._magnifierViewChange(magnifierView); }),
+                watchUtils.init(this, "viewModel.enabled", function (enabled) { return _this._enabledChange(enabled); })
             ]);
         };
         //--------------------------------------------------------------------------
@@ -71,13 +71,24 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
         //
         //--------------------------------------------------------------------------
         Magnifier.prototype.render = function () {
-            return (widget_1.tsx("div", null));
+            var handleNode = this.enabled ? (widget_1.tsx("div", { class: CSS.handle })) : null;
+            var containerNode = (widget_1.tsx("div", { class: CSS.base }, handleNode));
+            return containerNode;
         };
         //--------------------------------------------------------------------------
         //
         //  Private Methods
         //
         //--------------------------------------------------------------------------
+        Magnifier.prototype._enabledChange = function (enabled) {
+            var magViewNode = this.get("viewModel.magnifierView.container");
+            if (!magViewNode) {
+                return;
+            }
+            !enabled ?
+                magViewNode.classList.add(CSS.magnifierViewHidden) :
+                magViewNode.classList.remove(CSS.magnifierViewHidden);
+        };
         Magnifier.prototype._magnifierViewChange = function (magView) {
             if (!magView) {
                 return;
@@ -88,33 +99,35 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
                 return;
             }
             magViewNode.classList.add(CSS.magnifierView);
+            this._enabledChange(this.enabled);
             viewNode.insertBefore(magViewNode, this.view.ui.container);
             var magViewSurface = magView.get("surface");
             var clipPath = this.enabled ? "circle(150px at 50% 50%)" : "none";
             magViewSurface.style.clipPath = clipPath;
         };
+        __decorate([
+            widget_1.renderable(),
+            decorators_1.aliasOf("viewModel.enabled")
+        ], Magnifier.prototype, "enabled", void 0);
+        __decorate([
+            decorators_1.aliasOf("viewModel.layer")
+        ], Magnifier.prototype, "layer", void 0);
+        __decorate([
+            decorators_1.aliasOf("viewModel.view")
+        ], Magnifier.prototype, "view", void 0);
+        __decorate([
+            decorators_1.property({
+                type: MagnifierViewModel
+            }),
+            widget_1.renderable([
+                "viewModel.magnifierView"
+            ])
+        ], Magnifier.prototype, "viewModel", void 0);
+        Magnifier = __decorate([
+            decorators_1.subclass("demo.Magnifier")
+        ], Magnifier);
         return Magnifier;
     }(decorators_1.declared(Widget)));
-    __decorate([
-        decorators_1.aliasOf("viewModel.enabled")
-    ], Magnifier.prototype, "enabled", void 0);
-    __decorate([
-        decorators_1.aliasOf("viewModel.layer")
-    ], Magnifier.prototype, "layer", void 0);
-    __decorate([
-        decorators_1.aliasOf("viewModel.view")
-    ], Magnifier.prototype, "view", void 0);
-    __decorate([
-        decorators_1.property({
-            type: MagnifierViewModel
-        }),
-        widget_1.renderable([
-            "viewModel.magnifierView"
-        ])
-    ], Magnifier.prototype, "viewModel", void 0);
-    Magnifier = __decorate([
-        decorators_1.subclass("demo.Magnifier")
-    ], Magnifier);
     return Magnifier;
 });
 //# sourceMappingURL=Magnifier.js.map

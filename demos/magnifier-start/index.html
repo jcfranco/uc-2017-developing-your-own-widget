@@ -38,6 +38,7 @@
   </style>
 
   <script>
+    var mag;
     require([
       "esri/Map",
       "esri/views/MapView",
@@ -66,12 +67,11 @@
         map: map
       });
 
-      var mag = new Magnifier({
+      mag = new Magnifier({
+        container: "magnifier",
         view: view,
         layer: layer
       });
-
-      view.ui.add(mag, "bottom-left");
 
     });
 
@@ -81,6 +81,7 @@
 
 <body>
   <div id="viewDiv"></div>
+  <div id="magnifier"></div>
 </body>
 
 </html>
