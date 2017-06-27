@@ -21,6 +21,9 @@ import SceneView = require("esri/views/SceneView");
 
 import Layer = require("esri/layers/Layer");
 
+import move = require("dojo/dnd/move");
+import domGeometry = require("dojo/dom-geometry");
+
 // todo
 //import * as i18n from "dojo/i18n!esri/widgets/Compass/nls/Compass";
 
@@ -33,6 +36,8 @@ const CSS = {
 
 @subclass("demo.Magnifier")
 class Magnifier extends declared(Widget) {
+
+  _moverNode: HTMLElement = null;
 
   //--------------------------------------------------------------------------
   //
@@ -47,8 +52,13 @@ class Magnifier extends declared(Widget) {
   postInitialize() {
     this.own([
       watchUtils.init(this, "viewModel.magnifierView", magnifierView => this._magnifierViewChange(magnifierView)),
-      watchUtils.init(this, "viewModel.enabled", enabled => this._enabledChange(enabled))
+      watchUtils.init(this, "viewModel.enabled", enabled => this._enabledChange(enabled)),
+      watchUtils.on(this, "mover", "Move", () => this._moverMoved())
     ]);
+  }
+
+  destroy() {
+    this._destroyMover();
   }
 
   //--------------------------------------------------------------------------
@@ -69,6 +79,14 @@ class Magnifier extends declared(Widget) {
   //----------------------------------
   @aliasOf("viewModel.layer")
   layer: Layer = null;
+
+  //----------------------------------
+  //  mover
+  //----------------------------------
+  @property({
+    readOnly: true
+  })
+  mover: move = null;
 
   //----------------------------------
   //  view
@@ -101,7 +119,7 @@ class Magnifier extends declared(Widget) {
     ) : null;
 
     const containerNode = (
-      <div class={CSS.base}>{handleNode}</div>
+      <div class={CSS.base} bind={this} afterCreate={this._setupMovable} afterUpdate={this._setupMovable}>{handleNode}</div>
     );
 
     return containerNode;
@@ -113,7 +131,41 @@ class Magnifier extends declared(Widget) {
   //
   //--------------------------------------------------------------------------
 
-  _enabledChange(enabled: boolean) : void {
+  private _moverMoved(): void {
+    if(!this._moverNode){
+      return;
+    }
+
+    // todo: not use dojo?
+    const marginBox = domGeometry.getMarginBox(this._moverNode);
+    console.log(marginBox);
+    this._updateClipPath(`${marginBox.l}px`, `${marginBox.t}px`);
+  }
+
+  private _destroyMover(): void{
+    if(!this.mover){
+      return;
+    }
+
+    this.mover.destroy();
+    this._set("mover", undefined);
+  }
+
+  private _setupMovable(element: HTMLElement): void {
+    this._destroyMover();
+
+    this._moverNode = element;
+
+    const mover = new move.parentConstrainedMoveable(element, {
+        area: "content",
+        within: true
+      });
+      this._set("mover", mover);
+      element.style.left = "50%";
+      element.style.top = "50%";
+  }
+
+  private _enabledChange(enabled: boolean) : void {
     const magViewNode = this.get<HTMLElement>("viewModel.magnifierView.container");
 
     if (!magViewNode) {
@@ -121,11 +173,17 @@ class Magnifier extends declared(Widget) {
     }
     
     !enabled ?
-      magViewNode.classList.add(CSS.magnifierViewHidden) :
+    magViewNode.classList.add(CSS.magnifierViewHidden) :
       magViewNode.classList.remove(CSS.magnifierViewHidden);
   }
 
-  _magnifierViewChange(magView: MapView | SceneView): void {
+  private _updateClipPath(left: string, top: string): void {
+    const magViewSurface = this.get<HTMLElement>("viewModel.magnifierView.surface");
+    const clipPath = this.enabled ? `circle(150px at ${left} ${top})` : "none";
+    magViewSurface.style.clipPath = clipPath;
+  }
+
+  private _magnifierViewChange(magView: MapView | SceneView): void {
     if (!magView) {
       return;
     }
@@ -140,10 +198,7 @@ class Magnifier extends declared(Widget) {
     magViewNode.classList.add(CSS.magnifierView);
     this._enabledChange(this.enabled);
     viewNode.insertBefore(magViewNode, this.view.ui.container);
-
-    const magViewSurface = magView.get<HTMLElement>("surface");
-    const clipPath = this.enabled ? "circle(150px at 50% 50%)" : "none";
-    magViewSurface.style.clipPath = clipPath;
+    this._updateClipPath("50%", "50%");
   }
 }
 

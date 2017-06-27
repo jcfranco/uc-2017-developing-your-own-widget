@@ -176,7 +176,7 @@ class MagnifierViewModel extends declared(Accessor) {
       return;
     }
 
-    magView.zoom = view.zoom + 1;
+    magView.scale = view.scale;
     //magView.scale = view.scale; // todo: figure out what to do here
     magView.center = view.center;
   }
