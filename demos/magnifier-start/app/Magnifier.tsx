@@ -145,8 +145,8 @@ class Magnifier extends declared(Widget) {
     this._updateClipPath(`${marginBox.l}px`, `${marginBox.t}px`);
 
     this.viewModel.update({
-      x: event.screenX,
-      y: event.screenY
+      x: event.clientX,
+      y: event.clientY
     });
   }
 
