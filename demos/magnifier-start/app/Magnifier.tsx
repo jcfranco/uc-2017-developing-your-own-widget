@@ -43,10 +43,6 @@ class Magnifier extends declared(Widget) {
   //
   //--------------------------------------------------------------------------
 
-  constructor(params?: any) {
-    super();
-  }
-
   postInitialize() {
     this.own([
       watchUtils.init(this, "viewModel.magnifierView", magnifierView => this._magnifierViewChange(magnifierView)),
@@ -76,19 +72,22 @@ class Magnifier extends declared(Widget) {
   //----------------------------------
   //  enabled
   //----------------------------------
-  @renderable()
+
   @aliasOf("viewModel.enabled")
+  @renderable()
   enabled: boolean = null;
 
   //----------------------------------
   //  layer
   //----------------------------------
+
   @aliasOf("viewModel.layer")
   layer: Layer = null;
 
   //----------------------------------
   //  mover
   //----------------------------------
+
   @property({
     readOnly: true
   })
@@ -120,15 +119,14 @@ class Magnifier extends declared(Widget) {
   //--------------------------------------------------------------------------
 
   render(): any {
-    const handleNode = this.enabled ? (
-      <div class={CSS.handle}></div>
-    ) : null;
-
-    const containerNode = (
-      <div class={CSS.base} bind={this} afterCreate={this._setupMovable} afterUpdate={this._setupMovable}>{handleNode}</div>
+    return (
+      <div afterCreate={this._setupMovable}
+           afterUpdate={this._setupMovable}
+           bind={this}
+           class={CSS.base}>{
+        this.enabled ? <div class={CSS.handle} /> : null
+      }</div>
     );
-
-    return containerNode;
   }
 
   //--------------------------------------------------------------------------
@@ -138,13 +136,12 @@ class Magnifier extends declared(Widget) {
   //--------------------------------------------------------------------------
 
   private _moverMoved(event: PointerEvent): void {
-    if(!this._moverNode){
+    if (!this._moverNode) {
       return;
     }
 
     // todo: not use dojo?
     const marginBox = domGeometry.getMarginBox(this._moverNode);
-    console.log(marginBox);
     this._updateClipPath(`${marginBox.l}px`, `${marginBox.t}px`);
 
     this.viewModel.update({
@@ -153,13 +150,13 @@ class Magnifier extends declared(Widget) {
     });
   }
 
-  private _destroyMover(): void{
-    if(!this.mover){
+  private _destroyMover(): void {
+    if (!this.mover) {
       return;
     }
 
     this.mover.destroy();
-    this._set("mover", undefined);
+    this._set("mover", null);
   }
 
   private _setupMovable(element: HTMLElement): void {
@@ -176,21 +173,20 @@ class Magnifier extends declared(Widget) {
     element.style.top = "50%";
   }
 
-  private _enabledChange(enabled: boolean) : void {
+  private _enabledChange(enabled: boolean): void {
     const magViewNode = this.get<HTMLElement>("viewModel.magnifierView.container");
 
     if (!magViewNode) {
       return;
     }
 
-    !enabled ?
-    magViewNode.classList.add(CSS.magnifierViewHidden) :
-      magViewNode.classList.remove(CSS.magnifierViewHidden);
+    magViewNode.classList.toggle(CSS.magnifierViewHidden, !enabled);
   }
 
   private _updateClipPath(left: string, top: string): void {
     const magViewSurface = this.get<HTMLElement>("viewModel.magnifierView.surface");
     const clipPath = this.enabled ? `circle(150px at ${left} ${top})` : "none";
+
     magViewSurface.style.clipPath = clipPath;
   }
 
@@ -207,7 +203,7 @@ class Magnifier extends declared(Widget) {
     }
 
     magViewNode.classList.add(CSS.magnifierView);
-    this._enabledChange(this.enabled);
+    this._enabledChange(this.enabled); // needed?
     viewNode.insertBefore(magViewNode, this.view.ui.container);
     this._updateClipPath("50%", "50%");
   }

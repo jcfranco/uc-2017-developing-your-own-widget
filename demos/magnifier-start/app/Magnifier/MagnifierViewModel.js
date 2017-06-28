@@ -23,10 +23,15 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
         function MagnifierViewModel() {
             //--------------------------------------------------------------------------
             //
-            //  Private Variables
+            //  Lifecycle
             //
             //--------------------------------------------------------------------------
             var _this = _super !== null && _super.apply(this, arguments) || this;
+            //--------------------------------------------------------------------------
+            //
+            //  Variables
+            //
+            //--------------------------------------------------------------------------
             _this._handles = [];
             _this._viewpointHandle = null;
             //--------------------------------------------------------------------------
@@ -52,24 +57,12 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
             _this.view = null;
             return _this;
         }
-        //--------------------------------------------------------------------------
-        //
-        //  Lifecycle
-        //
-        //--------------------------------------------------------------------------
         MagnifierViewModel.prototype.initialize = function () {
             var _this = this;
-            var viewHandle = watchUtils.init(this, "view", function (view) { return _this._viewChange(view); });
-            this._handles.push(viewHandle);
-            var layerHandle = watchUtils.init(this, "layer", function (newLayer, oldLayer) { return _this._layerChange(newLayer, oldLayer); });
-            this._handles.push(layerHandle);
-            var enabledHandle = watchUtils.init(this, "enabled", function (enabled) { return _this._enabledChange(enabled); });
-            this._handles.push(enabledHandle);
+            this._handles.push(watchUtils.init(this, "view", function (view) { return _this._viewChange(view); }), watchUtils.init(this, "layer", function (newLayer, oldLayer) { return _this._layerChange(newLayer, oldLayer); }), watchUtils.init(this, "enabled", function (enabled) { return _this._enabledChange(enabled); }));
         };
         MagnifierViewModel.prototype.destroy = function () {
-            this._handles.forEach(function (handle) {
-                handle.remove();
-            });
+            this._handles.forEach(function (handle) { return handle.remove(); });
             this.magnifierView = null;
         };
         //--------------------------------------------------------------------------

@@ -28,13 +28,13 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
     };
     var Magnifier = (function (_super) {
         __extends(Magnifier, _super);
-        //--------------------------------------------------------------------------
-        //
-        //  Lifecycle
-        //
-        //--------------------------------------------------------------------------
-        function Magnifier(params) {
-            var _this = _super.call(this) || this;
+        function Magnifier() {
+            //--------------------------------------------------------------------------
+            //
+            //  Lifecycle
+            //
+            //--------------------------------------------------------------------------
+            var _this = _super !== null && _super.apply(this, arguments) || this;
             //--------------------------------------------------------------------------
             //
             //  Variables
@@ -85,9 +85,7 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
         //
         //--------------------------------------------------------------------------
         Magnifier.prototype.render = function () {
-            var handleNode = this.enabled ? (widget_1.tsx("div", { class: CSS.handle })) : null;
-            var containerNode = (widget_1.tsx("div", { class: CSS.base, bind: this, afterCreate: this._setupMovable, afterUpdate: this._setupMovable }, handleNode));
-            return containerNode;
+            return (widget_1.tsx("div", { afterCreate: this._setupMovable, afterUpdate: this._setupMovable, bind: this, class: CSS.base }, this.enabled ? widget_1.tsx("div", { class: CSS.handle }) : null));
         };
         //--------------------------------------------------------------------------
         //
@@ -100,7 +98,6 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
             }
             // todo: not use dojo?
             var marginBox = domGeometry.getMarginBox(this._moverNode);
-            console.log(marginBox);
             this._updateClipPath(marginBox.l + "px", marginBox.t + "px");
             this.viewModel.update({
                 x: event.screenX,
@@ -112,7 +109,7 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
                 return;
             }
             this.mover.destroy();
-            this._set("mover", undefined);
+            this._set("mover", null);
         };
         Magnifier.prototype._setupMovable = function (element) {
             this._destroyMover();
@@ -129,9 +126,7 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
             if (!magViewNode) {
                 return;
             }
-            !enabled ?
-                magViewNode.classList.add(CSS.magnifierViewHidden) :
-                magViewNode.classList.remove(CSS.magnifierViewHidden);
+            magViewNode.classList.toggle(CSS.magnifierViewHidden, !enabled);
         };
         Magnifier.prototype._updateClipPath = function (left, top) {
             var magViewSurface = this.get("viewModel.magnifierView.surface");
@@ -148,15 +143,15 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
                 return;
             }
             magViewNode.classList.add(CSS.magnifierView);
-            this._enabledChange(this.enabled);
+            this._enabledChange(this.enabled); // needed?
             viewNode.insertBefore(magViewNode, this.view.ui.container);
             this._updateClipPath("50%", "50%");
         };
         return Magnifier;
     }(decorators_1.declared(Widget)));
     __decorate([
-        widget_1.renderable(),
-        decorators_1.aliasOf("viewModel.enabled")
+        decorators_1.aliasOf("viewModel.enabled"),
+        widget_1.renderable()
     ], Magnifier.prototype, "enabled", void 0);
     __decorate([
         decorators_1.aliasOf("viewModel.layer")

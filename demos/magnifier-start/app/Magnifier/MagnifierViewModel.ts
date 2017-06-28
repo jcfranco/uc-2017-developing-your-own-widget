@@ -28,38 +28,34 @@ class MagnifierViewModel extends declared(Accessor) {
 
   //--------------------------------------------------------------------------
   //
-  //  Private Variables
+  //  Lifecycle
+  //
+  //--------------------------------------------------------------------------
+
+  initialize() {
+    this._handles.push(
+      watchUtils.init(this, "view", view => this._viewChange(view)),
+      watchUtils.init(this, "layer", (newLayer, oldLayer) => this._layerChange(newLayer, oldLayer)),
+      watchUtils.init(this, "enabled", enabled => this._enabledChange(enabled))
+    );
+  }
+
+
+  destroy() {
+    this._handles.forEach(handle => handle.remove());
+
+    this.magnifierView = null;
+  }
+
+  //--------------------------------------------------------------------------
+  //
+  //  Variables
   //
   //--------------------------------------------------------------------------
 
   _handles: PausableHandle[] = [];
 
   _viewpointHandle: PausableHandle = null;
-
-  //--------------------------------------------------------------------------
-  //
-  //  Lifecycle
-  //
-  //--------------------------------------------------------------------------
-
-  initialize() {
-    const viewHandle = watchUtils.init(this, "view", view => this._viewChange(view));
-    this._handles.push(viewHandle);
-
-    const layerHandle = watchUtils.init(this, "layer", (newLayer, oldLayer) => this._layerChange(newLayer, oldLayer));
-    this._handles.push(layerHandle);
-
-    const enabledHandle = watchUtils.init(this, "enabled", enabled => this._enabledChange(enabled));
-    this._handles.push(enabledHandle);
-  }
-
-  destroy() {
-    this._handles.forEach(handle => {
-      handle.remove();
-    });
-
-    this.magnifierView = null;
-  }
 
   //--------------------------------------------------------------------------
   //
