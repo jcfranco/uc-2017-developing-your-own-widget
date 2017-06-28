@@ -16,7 +16,8 @@ import MapView = require("esri/views/MapView");
 import SceneView = require("esri/views/SceneView");
 
 import Layer = require("esri/layers/Layer");
-import Point = dojo.Point;
+
+type ScreenPoint = { x: number, y: number };
 
 interface PausableHandle extends IHandle {
   pause?(): void;
@@ -99,7 +100,7 @@ class MagnifierViewModel extends declared(Accessor) {
   //
   //--------------------------------------------------------------------------
 
-  updateView(magnifyAt: Point): void {
+  updateView(magnifyAt: ScreenPoint): void {
     const magView = this.get<MapView | SceneView>("magnifierView");
     const view = this.get<MapView | SceneView>("view");
 
@@ -125,7 +126,7 @@ class MagnifierViewModel extends declared(Accessor) {
     this._viewpointHandle = null;
   }
 
-  private _createViewpointHandle(view: MapView | SceneView) {
+  private _createViewpointHandle(view: MapView | SceneView): void {
     if (!view) {
       return;
     }
@@ -142,24 +143,20 @@ class MagnifierViewModel extends declared(Accessor) {
     this._removeViewpointHandle();
 
     if (!view) {
-      this._set("magnifierView", undefined);
+      this._set("magnifierView", null);
       return;
     }
 
     const components: string[] = [];
-
     const viewOptions = {
       container: document.createElement("div"),
-      ui: {
-        components: components
-      },
+      ui: { components },
       map: new Map()
-    }
+    };
 
-    const is3dView = view.type === "3d";
     this._createViewpointHandle(view);
 
-    const magnifierView = is3dView ?
+    const magnifierView = view.type === "3d" ?
       new SceneView(viewOptions) :
       new MapView(viewOptions);
 
@@ -167,11 +164,14 @@ class MagnifierViewModel extends declared(Accessor) {
   }
 
   private _enabledChange(enabled: boolean): void {
-    if (!this._viewpointHandle) {
+    const handle = this._viewpointHandle;
+    if (!handle) {
       return;
     }
 
-    enabled ? this._viewpointHandle.resume() : this._viewpointHandle.pause();
+    enabled ?
+      handle.resume() :
+      handle.pause();
   }
 
   private _viewpointChange(): void {
@@ -182,8 +182,10 @@ class MagnifierViewModel extends declared(Accessor) {
       return;
     }
 
-    magView.scale = view.scale / 2;
-    magView.center = view.center;
+    magView.set({
+      scale: view.scale / 2,
+      center: view.center
+    });
   }
 
   private _layerChange(newLayer: Layer, oldLayer: Layer): void {

@@ -104,29 +104,29 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
         MagnifierViewModel.prototype._viewChange = function (view) {
             this._removeViewpointHandle();
             if (!view) {
-                this._set("magnifierView", undefined);
+                this._set("magnifierView", null);
                 return;
             }
             var components = [];
             var viewOptions = {
                 container: document.createElement("div"),
-                ui: {
-                    components: components
-                },
+                ui: { components: components },
                 map: new Map()
             };
-            var is3dView = view.type === "3d";
             this._createViewpointHandle(view);
-            var magnifierView = is3dView ?
+            var magnifierView = view.type === "3d" ?
                 new SceneView(viewOptions) :
                 new MapView(viewOptions);
             this._set("magnifierView", magnifierView);
         };
         MagnifierViewModel.prototype._enabledChange = function (enabled) {
-            if (!this._viewpointHandle) {
+            var handle = this._viewpointHandle;
+            if (!handle) {
                 return;
             }
-            enabled ? this._viewpointHandle.resume() : this._viewpointHandle.pause();
+            enabled ?
+                handle.resume() :
+                handle.pause();
         };
         MagnifierViewModel.prototype._viewpointChange = function () {
             var magView = this.get("magnifierView");
@@ -134,8 +134,10 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
             if (!view || !magView) {
                 return;
             }
-            magView.scale = view.scale / 2;
-            magView.center = view.center;
+            magView.set({
+                scale: view.scale / 2,
+                center: view.center
+            });
         };
         MagnifierViewModel.prototype._layerChange = function (newLayer, oldLayer) {
             var map = this.get("magnifierView.map");
