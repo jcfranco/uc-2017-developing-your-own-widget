@@ -9,8 +9,6 @@ import {
   accessibleHandler
 } from "esri/widgets/support/widget";
 
-//import { Axes } from "esri/widgets/interfaces";
-
 import watchUtils = require("esri/core/watchUtils");
 
 import Widget = require("esri/widgets/Widget");
@@ -24,6 +22,8 @@ import Layer = require("esri/layers/Layer");
 import move = require("dojo/dnd/move");
 import domGeometry = require("dojo/dom-geometry");
 
+import ParentConstrainedMoveable = dojo.dnd.ParentConstrainedMoveable;
+
 // todo
 //import * as i18n from "dojo/i18n!esri/widgets/Compass/nls/Compass";
 
@@ -36,8 +36,6 @@ const CSS = {
 
 @subclass("demo.Magnifier")
 class Magnifier extends declared(Widget) {
-
-  _moverNode: HTMLElement = null;
 
   //--------------------------------------------------------------------------
   //
@@ -60,6 +58,14 @@ class Magnifier extends declared(Widget) {
   destroy() {
     this._destroyMover();
   }
+
+  //--------------------------------------------------------------------------
+  //
+  //  Variables
+  //
+  //--------------------------------------------------------------------------
+
+  _moverNode: HTMLElement = null;
 
   //--------------------------------------------------------------------------
   //
@@ -86,7 +92,7 @@ class Magnifier extends declared(Widget) {
   @property({
     readOnly: true
   })
-  mover: move = null;
+  mover: ParentConstrainedMoveable = null;
 
   //----------------------------------
   //  view
@@ -156,13 +162,13 @@ class Magnifier extends declared(Widget) {
 
     this._moverNode = element;
 
-    const mover = new move.parentConstrainedMoveable(element, {
-        area: "content",
-        within: true
-      });
-      this._set("mover", mover);
-      element.style.left = "50%";
-      element.style.top = "50%";
+    this._set("mover", new move.parentConstrainedMoveable(element, {
+      area: "content",
+      within: true
+    } as any));
+
+    element.style.left = "50%";
+    element.style.top = "50%";
   }
 
   private _enabledChange(enabled: boolean) : void {
@@ -171,7 +177,7 @@ class Magnifier extends declared(Widget) {
     if (!magViewNode) {
       return;
     }
-    
+
     !enabled ?
     magViewNode.classList.add(CSS.magnifierViewHidden) :
       magViewNode.classList.remove(CSS.magnifierViewHidden);

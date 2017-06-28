@@ -1,15 +1,10 @@
 /// <amd-dependency path="esri/core/tsSupport/declareExtendsHelper" name="__extends" />
 /// <amd-dependency path="esri/core/tsSupport/decorateHelper" name="__decorate" />
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -26,7 +21,7 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
             //  Private Variables
             //
             //--------------------------------------------------------------------------
-            var _this = _super !== null && _super.apply(this, arguments) || this;
+            var _this = _super.apply(this, arguments) || this;
             _this._handles = [];
             _this._viewpointHandle = null;
             //--------------------------------------------------------------------------
@@ -150,25 +145,25 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
                 map.add(newLayer);
             }
         };
-        __decorate([
-            decorators_1.property()
-        ], MagnifierViewModel.prototype, "enabled", void 0);
-        __decorate([
-            decorators_1.property()
-        ], MagnifierViewModel.prototype, "layer", void 0);
-        __decorate([
-            decorators_1.property({
-                readOnly: true
-            })
-        ], MagnifierViewModel.prototype, "magnifierView", void 0);
-        __decorate([
-            decorators_1.property()
-        ], MagnifierViewModel.prototype, "view", void 0);
-        MagnifierViewModel = __decorate([
-            decorators_1.subclass("demo.MagnifierViewModel")
-        ], MagnifierViewModel);
         return MagnifierViewModel;
     }(decorators_1.declared(Accessor)));
+    __decorate([
+        decorators_1.property()
+    ], MagnifierViewModel.prototype, "enabled", void 0);
+    __decorate([
+        decorators_1.property()
+    ], MagnifierViewModel.prototype, "layer", void 0);
+    __decorate([
+        decorators_1.property({
+            readOnly: true
+        })
+    ], MagnifierViewModel.prototype, "magnifierView", void 0);
+    __decorate([
+        decorators_1.property()
+    ], MagnifierViewModel.prototype, "view", void 0);
+    MagnifierViewModel = __decorate([
+        decorators_1.subclass("demo.MagnifierViewModel")
+    ], MagnifierViewModel);
     return MagnifierViewModel;
 });
 //# sourceMappingURL=MagnifierViewModel.js.map
