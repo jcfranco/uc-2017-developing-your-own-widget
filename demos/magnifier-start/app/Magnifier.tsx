@@ -51,7 +51,7 @@ class Magnifier extends declared(Widget) {
     this.own([
       watchUtils.init(this, "viewModel.magnifierView", magnifierView => this._magnifierViewChange(magnifierView)),
       watchUtils.init(this, "viewModel.enabled", enabled => this._enabledChange(enabled)),
-      watchUtils.on(this, "mover", "Move", () => this._moverMoved())
+      watchUtils.on(this, "mover", "Move", (e: any, box: any, event: PointerEvent) => this._moverMoved(event))
     ]);
   }
 
@@ -137,7 +137,7 @@ class Magnifier extends declared(Widget) {
   //
   //--------------------------------------------------------------------------
 
-  private _moverMoved(): void {
+  private _moverMoved(event: PointerEvent): void {
     if(!this._moverNode){
       return;
     }
@@ -146,6 +146,11 @@ class Magnifier extends declared(Widget) {
     const marginBox = domGeometry.getMarginBox(this._moverNode);
     console.log(marginBox);
     this._updateClipPath(`${marginBox.l}px`, `${marginBox.t}px`);
+
+    this.viewModel.update({
+      x: event.screenX,
+      y: event.screenY
+    });
   }
 
   private _destroyMover(): void{

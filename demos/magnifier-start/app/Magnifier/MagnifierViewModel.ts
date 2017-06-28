@@ -16,6 +16,7 @@ import MapView = require("esri/views/MapView");
 import SceneView = require("esri/views/SceneView");
 
 import Layer = require("esri/layers/Layer");
+import Point = dojo.Point;
 
 interface PausableHandle extends IHandle {
   pause?(): void;
@@ -102,7 +103,16 @@ class MagnifierViewModel extends declared(Accessor) {
   //
   //--------------------------------------------------------------------------
 
-  // todo?
+  update(point: Point): void {
+    const magView = this.get<MapView | SceneView>("magnifierView");
+    const view = this.get<MapView | SceneView>("view");
+
+    if (!view || !magView) {
+      return;
+    }
+
+    magView.center = view.toMap(point);
+  }
 
   //--------------------------------------------------------------------------
   //
@@ -176,8 +186,7 @@ class MagnifierViewModel extends declared(Accessor) {
       return;
     }
 
-    magView.scale = view.scale;
-    //magView.scale = view.scale; // todo: figure out what to do here
+    magView.scale = view.scale / 2;
     magView.center = view.center;
   }
 

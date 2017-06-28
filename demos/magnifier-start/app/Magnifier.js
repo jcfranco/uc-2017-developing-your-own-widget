@@ -1,10 +1,15 @@
 /// <amd-dependency path="esri/core/tsSupport/declareExtendsHelper" name="__extends" />
 /// <amd-dependency path="esri/core/tsSupport/decorateHelper" name="__decorate" />
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -68,7 +73,7 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
             this.own([
                 watchUtils.init(this, "viewModel.magnifierView", function (magnifierView) { return _this._magnifierViewChange(magnifierView); }),
                 watchUtils.init(this, "viewModel.enabled", function (enabled) { return _this._enabledChange(enabled); }),
-                watchUtils.on(this, "mover", "Move", function () { return _this._moverMoved(); })
+                watchUtils.on(this, "mover", "Move", function (e, box, event) { return _this._moverMoved(event); })
             ]);
         };
         Magnifier.prototype.destroy = function () {
@@ -89,7 +94,7 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
         //  Private Methods
         //
         //--------------------------------------------------------------------------
-        Magnifier.prototype._moverMoved = function () {
+        Magnifier.prototype._moverMoved = function (event) {
             if (!this._moverNode) {
                 return;
             }
@@ -97,6 +102,10 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
             var marginBox = domGeometry.getMarginBox(this._moverNode);
             console.log(marginBox);
             this._updateClipPath(marginBox.l + "px", marginBox.t + "px");
+            this.viewModel.update({
+                x: event.screenX,
+                y: event.screenY
+            });
         };
         Magnifier.prototype._destroyMover = function () {
             if (!this.mover) {
