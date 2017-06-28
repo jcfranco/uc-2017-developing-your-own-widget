@@ -99,7 +99,7 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
             // todo: not use dojo?
             var marginBox = domGeometry.getMarginBox(this._moverNode);
             this._updateClipPath(marginBox.l + "px", marginBox.t + "px");
-            this.viewModel.update({
+            this.viewModel.updateView({
                 x: event.clientX,
                 y: event.clientY
             });

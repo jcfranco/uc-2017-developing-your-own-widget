@@ -99,7 +99,7 @@ class MagnifierViewModel extends declared(Accessor) {
   //
   //--------------------------------------------------------------------------
 
-  update(point: Point): void {
+  updateView(magnifyAt: Point): void {
     const magView = this.get<MapView | SceneView>("magnifierView");
     const view = this.get<MapView | SceneView>("view");
 
@@ -107,7 +107,7 @@ class MagnifierViewModel extends declared(Accessor) {
       return;
     }
 
-    magView.center = view.toMap(point);
+    magView.center = view.toMap(magnifyAt);
   }
 
   //--------------------------------------------------------------------------

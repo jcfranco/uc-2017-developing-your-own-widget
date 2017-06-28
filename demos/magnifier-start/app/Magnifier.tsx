@@ -144,7 +144,7 @@ class Magnifier extends declared(Widget) {
     const marginBox = domGeometry.getMarginBox(this._moverNode);
     this._updateClipPath(`${marginBox.l}px`, `${marginBox.t}px`);
 
-    this.viewModel.update({
+    this.viewModel.updateView({
       x: event.clientX,
       y: event.clientY
     });

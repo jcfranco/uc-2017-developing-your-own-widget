@@ -70,13 +70,13 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
         //  Public Methods
         //
         //--------------------------------------------------------------------------
-        MagnifierViewModel.prototype.update = function (point) {
+        MagnifierViewModel.prototype.updateView = function (magnifyAt) {
             var magView = this.get("magnifierView");
             var view = this.get("view");
             if (!view || !magView) {
                 return;
             }
-            magView.center = view.toMap(point);
+            magView.center = view.toMap(magnifyAt);
         };
         //--------------------------------------------------------------------------
         //
