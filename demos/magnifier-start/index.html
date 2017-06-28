@@ -69,10 +69,11 @@
       });
 
       mag = new Magnifier({
-        container: "magnifier",
         view: view,
         layer: layer
       });
+
+      view.ui.add(mag, "manual");
 
     });
 
@@ -82,7 +83,6 @@
 
 <body>
   <div id="viewDiv"></div>
-  <div id="magnifier"></div>
 </body>
 
 </html>
