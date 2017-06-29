@@ -1,5 +1,10 @@
 // remove dojo/dnd/move typings when https://github.com/dojo/typings/pull/125 is merged
 
+declare module "dojo/i18n!*" {
+  const i18n: any;
+  export = i18n;
+}
+
 declare module "dojo/dnd/move" {
   const Move: dojo.dnd.Move;
   export = Move;
