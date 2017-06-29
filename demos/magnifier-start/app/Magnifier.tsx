@@ -36,7 +36,7 @@ import domGeometry = require("dojo/dom-geometry");
 
 import ParentConstrainedMoveable = dojo.dnd.ParentConstrainedMoveable;
 
-import * as i18n from "dojo/i18n!./nls/Magnifier";
+import * as i18n from "dojo/i18n!./Magnifier/nls/Magnifier";
 
 const CSS = {
   base: "esri-magnifier esri-widget",
