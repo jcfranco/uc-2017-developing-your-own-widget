@@ -160,6 +160,8 @@ class MagnifierViewModel extends declared(Accessor) {
       new SceneView(viewOptions) :
       new MapView(viewOptions);
 
+    (magnifierView.get("surface") as HTMLElement).tabIndex = -1;
+
     this._set("magnifierView", magnifierView);
   }
 
