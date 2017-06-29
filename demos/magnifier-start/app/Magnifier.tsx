@@ -1,13 +1,25 @@
 /// <amd-dependency path="esri/core/tsSupport/declareExtendsHelper" name="__extends" />
 /// <amd-dependency path="esri/core/tsSupport/decorateHelper" name="__decorate" />
 
-import { aliasOf, subclass, property, declared } from "esri/core/accessorSupport/decorators";
+import {
+  aliasOf,
+  subclass,
+  property,
+  declared
+} from "esri/core/accessorSupport/decorators";
 
 import {
   tsx,
   renderable,
   accessibleHandler
 } from "esri/widgets/support/widget";
+
+import {
+  DOWN_ARROW,
+  LEFT_ARROW,
+  RIGHT_ARROW,
+  UP_ARROW,
+} from "dojo/keys";
 
 import watchUtils = require("esri/core/watchUtils");
 
@@ -33,6 +45,13 @@ const CSS = {
   magnifierView: "esri-magnifier__view",
   magnifierViewHidden: "esri-magnifier__view--hidden"
 };
+
+const supportedKeys = [
+  DOWN_ARROW,
+  LEFT_ARROW,
+  RIGHT_ARROW,
+  UP_ARROW
+];
 
 @subclass("demo.Magnifier")
 class Magnifier extends declared(Widget) {
@@ -124,7 +143,12 @@ class Magnifier extends declared(Widget) {
            afterUpdate={this._setupMovable}
            bind={this}
            class={CSS.base}>{
-        this.enabled ? <div class={CSS.handle} /> : null
+        this.enabled ?
+          <div bind={this}
+               class={CSS.handle}
+               onkeydown={this._handleKeyDown}
+               tabIndex={0} /> :
+          null
       }</div>
     );
   }
@@ -206,6 +230,34 @@ class Magnifier extends declared(Widget) {
     viewNode.insertBefore(magViewNode, this.view.ui.container);
     this._updateClipPath("50%", "50%");
   }
+
+  private _handleKeyDown(event: KeyboardEvent): void {
+    const { keyCode } = event;
+
+    if (supportedKeys.indexOf(keyCode) === -1) {
+      return;
+    }
+
+    if (keyCode === LEFT_ARROW) {
+      // TODO: move left
+    }
+
+    if (keyCode === RIGHT_ARROW) {
+      // TODO: move right
+    }
+
+    if (keyCode === DOWN_ARROW) {
+      // TODO: move down
+    }
+
+    if (keyCode === UP_ARROW) {
+      // TODO: move up
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
 }
 
 export = Magnifier;
