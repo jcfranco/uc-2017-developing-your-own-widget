@@ -23,4 +23,5 @@
   margin: -152px 0 0 -152px;
   border-radius: 50%;
   box-shadow: #000 0px 0px 8px 4px;
+  cursor: move;
 }
