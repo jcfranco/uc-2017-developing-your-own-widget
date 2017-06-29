@@ -144,9 +144,11 @@ class Magnifier extends declared(Widget) {
            class={CSS.base}>{
         this.enabled ?
           <div bind={this}
+               aria-label={i18n.keyboardHelp}
                class={CSS.handle}
                onkeydown={this._handleKeyDown}
-               tabIndex={0} /> :
+               tabIndex={0}
+               title={i18n.dragHelp} /> :
           null
       }</div>
     );
