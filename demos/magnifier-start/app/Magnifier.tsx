@@ -65,7 +65,7 @@ class Magnifier extends declared(Widget) {
     this.own([
       watchUtils.init(this, "viewModel.magnifierView", magnifierView => this._magnifierViewChange(magnifierView)),
       watchUtils.init(this, "viewModel.enabled", enabled => this._enabledChange(enabled)),
-      watchUtils.on(this, "mover", "Move", (e: any, box: any, event: PointerEvent) => this._moverMoved(event))
+      watchUtils.on(this, "mover", "Move", () => this._moverMoved())
     ]);
   }
 
@@ -158,19 +158,18 @@ class Magnifier extends declared(Widget) {
   //
   //--------------------------------------------------------------------------
 
-  private _moverMoved(event: PointerEvent): void {
+  private _moverMoved(): void {
     if (!this._moverNode) {
       return;
     }
 
     // todo: not use dojo?
     const marginBox = domGeometry.getMarginBox(this._moverNode);
+    const { x, y } = domGeometry.position(this._moverNode);
+
     this._updateClipPath(`${marginBox.l}px`, `${marginBox.t}px`);
 
-    this.viewModel.updateView({
-      x: event.clientX,
-      y: event.clientY
-    });
+    this.viewModel.updateView({ x, y });
   }
 
   private _destroyMover(): void {
@@ -186,6 +185,9 @@ class Magnifier extends declared(Widget) {
     if (this.mover) {
       return;
     }
+
+    element.style.left = `${this.view.width / 2}px`;
+    element.style.top = `${this.view.height / 2}px`;
 
     this._moverNode = element;
 
@@ -231,26 +233,37 @@ class Magnifier extends declared(Widget) {
   }
 
   private _handleKeyDown(event: KeyboardEvent): void {
-    const { keyCode } = event;
+    const { keyCode, shiftKey } = event;
 
     if (supportedKeys.indexOf(keyCode) === -1) {
       return;
     }
 
-    if (keyCode === LEFT_ARROW) {
-      // TODO: move left
+    const style = this._moverNode.style;
+    const offsetInPx = shiftKey ? 25 : 10;
+
+    if (keyCode === LEFT_ARROW || keyCode === RIGHT_ARROW) {
+      const left = parseInt(style.left);
+      if (isNaN(left)) {
+        return;
+      }
+
+      const nudgeAmount = keyCode === RIGHT_ARROW ? offsetInPx : -offsetInPx;
+
+      style.left = `${left + nudgeAmount}px`;
+      this._moverMoved();
     }
 
-    if (keyCode === RIGHT_ARROW) {
-      // TODO: move right
-    }
+    if (keyCode === DOWN_ARROW || keyCode === UP_ARROW) {
+      const top = parseInt(style.top);
+      if (isNaN(top)) {
+        return;
+      }
 
-    if (keyCode === DOWN_ARROW) {
-      // TODO: move down
-    }
+      const nudgeAmount = keyCode === DOWN_ARROW ? offsetInPx : -offsetInPx;
 
-    if (keyCode === UP_ARROW) {
-      // TODO: move up
+      style.top = `${top + nudgeAmount}px`;
+      this._moverMoved();
     }
 
     event.preventDefault();
