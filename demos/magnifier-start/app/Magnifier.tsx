@@ -168,9 +168,6 @@ class Magnifier extends declared(Widget) {
       area: "content",
       within: true
     } as any));
-
-    element.style.left = "50%";
-    element.style.top = "50%";
   }
 
   private _enabledChange(enabled: boolean): void {
