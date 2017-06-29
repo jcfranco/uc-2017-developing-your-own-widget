@@ -160,7 +160,9 @@ class Magnifier extends declared(Widget) {
   }
 
   private _setupMovable(element: HTMLElement): void {
-    this._destroyMover();
+    if (this.mover) {
+      return;
+    }
 
     this._moverNode = element;
 
