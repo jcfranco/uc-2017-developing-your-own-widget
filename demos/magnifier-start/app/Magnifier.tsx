@@ -241,32 +241,24 @@ class Magnifier extends declared(Widget) {
       return;
     }
 
-    const style = this._moverNode.style;
+    const { style } = this._moverNode;
     const offsetInPx = shiftKey ? 25 : 10;
 
     if (keyCode === LEFT_ARROW || keyCode === RIGHT_ARROW) {
-      const left = parseInt(style.left);
-      if (isNaN(left)) {
-        return;
-      }
-
+      const left = parseInt(style.left) || 0;
       const nudgeAmount = keyCode === RIGHT_ARROW ? offsetInPx : -offsetInPx;
 
       style.left = `${left + nudgeAmount}px`;
-      this._moverMoved();
     }
 
     if (keyCode === DOWN_ARROW || keyCode === UP_ARROW) {
-      const top = parseInt(style.top);
-      if (isNaN(top)) {
-        return;
-      }
-
+      const top = parseInt(style.top) || 0;
       const nudgeAmount = keyCode === DOWN_ARROW ? offsetInPx : -offsetInPx;
 
       style.top = `${top + nudgeAmount}px`;
-      this._moverMoved();
     }
+
+    this._moverMoved();
 
     event.preventDefault();
     event.stopPropagation();
