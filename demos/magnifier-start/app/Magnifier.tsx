@@ -211,7 +211,10 @@ class Magnifier extends declared(Widget) {
 
   private _updateClipPath(left: string, top: string): void {
     const magViewSurface = this.get<HTMLElement>("viewModel.magnifierView.surface");
-    const clipPath = this.enabled ? `circle(150px at ${left} ${top})` : "none";
+    const handleNode = this._moverNode.children[0];
+    const { w: handleWidth } = domGeometry.position(handleNode);
+    const clipRadius = handleWidth / 2;
+    const clipPath = this.enabled ? `circle(${clipRadius}px at ${left} ${top})` : "none";
 
     magViewSurface.style.clipPath = clipPath;
   }
