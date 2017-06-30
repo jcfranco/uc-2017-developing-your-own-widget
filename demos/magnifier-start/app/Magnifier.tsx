@@ -137,20 +137,20 @@ class Magnifier extends declared(Widget) {
   //--------------------------------------------------------------------------
 
   render(): any {
+    const handle = this.enabled ? (
+      <div bind={this}
+           aria-label={i18n.keyboardHelp}
+           class={CSS.handle}
+           onkeydown={this._handleKeyDown}
+           tabIndex={0}
+           title={i18n.dragHelp} />
+    ) : null;
+
     return (
       <div afterCreate={this._setupMovable}
            afterUpdate={this._setupMovable}
            bind={this}
-           class={CSS.base}>{
-        this.enabled ?
-          <div bind={this}
-               aria-label={i18n.keyboardHelp}
-               class={CSS.handle}
-               onkeydown={this._handleKeyDown}
-               tabIndex={0}
-               title={i18n.dragHelp} /> :
-          null
-      }</div>
+           class={CSS.base}>{handle}</div>
     );
   }
 
