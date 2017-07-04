@@ -65,6 +65,8 @@ class Magnifier extends declared(Widget) {
     this.own([
       watchUtils.init(this, "viewModel.magnifierView", magnifierView => this._magnifierViewChange(magnifierView)),
       watchUtils.init(this, "viewModel.enabled", enabled => this._enabledChange(enabled)),
+      // todo: should we not recenter? couldn't get mover to update clip right.
+      watchUtils.watch(this, "view.size", () => this.center()),
       watchUtils.on(this, "mover", "Move", () => this._moverMoved())
     ]);
   }
@@ -139,19 +141,34 @@ class Magnifier extends declared(Widget) {
   render(): any {
     const handle = this.enabled ? (
       <div bind={this}
-           aria-label={i18n.keyboardHelp}
-           class={CSS.handle}
-           onkeydown={this._handleKeyDown}
-           tabIndex={0}
-           title={i18n.dragHelp} />
+        aria-label={i18n.keyboardHelp}
+        class={CSS.handle}
+        onkeydown={this._handleKeyDown}
+        tabIndex={0}
+        title={i18n.dragHelp} />
     ) : null;
 
     return (
       <div afterCreate={this._setupMovable}
-           afterUpdate={this._setupMovable}
-           bind={this}
-           class={CSS.base}>{handle}</div>
+        afterUpdate={this._setupMovable}
+        bind={this}
+        class={CSS.base}>{handle}</div>
     );
+  }
+
+  center(): void {
+    if (!this._moverNode || !this.view) {
+      return;
+    }
+
+    const { width, height } = this.view;
+    const left = `${width / 2}px`;
+    const top = `${height / 2}px`;
+
+    this._moverNode.style.left = left;
+    this._moverNode.style.top = top;
+
+    this._moverMoved();
   }
 
   //--------------------------------------------------------------------------
@@ -188,10 +205,9 @@ class Magnifier extends declared(Widget) {
       return;
     }
 
-    element.style.left = `${this.view.width / 2}px`;
-    element.style.top = `${this.view.height / 2}px`;
-
     this._moverNode = element;
+
+    this.center();
 
     this._set("mover", new move.parentConstrainedMoveable(element, {
       area: "content",
@@ -234,7 +250,7 @@ class Magnifier extends declared(Widget) {
     magViewNode.classList.add(CSS.magnifierView);
     this._enabledChange(this.enabled); // needed?
     viewNode.insertBefore(magViewNode, this.view.ui.container);
-    this._updateClipPath("50%", "50%");
+    this.center();
   }
 
   private _handleKeyDown(event: KeyboardEvent): void {
