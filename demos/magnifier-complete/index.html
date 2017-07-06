@@ -8,6 +8,7 @@
   <title>Magnifying Glass Widget</title>
 
   <link rel="stylesheet" href="https://js.arcgis.com/4.4/esri/css/main.css">
+  <link rel="stylesheet" href="app/Magnifier/css/Magnifier.css">
 
   <style>
     html,
@@ -41,11 +42,13 @@
       "esri/Map",
       "esri/views/MapView",
       "esri/layers/TileLayer",
+      "demo/Magnifier",
       "dojo/domReady!"
     ], function (
       Map,
       MapView,
-      TileLayer
+      TileLayer,
+      Magnifier
     ) {
 
       var map = new Map({
@@ -63,6 +66,12 @@
         map: map
       });
 
+      magnifier = new Magnifier({
+        view: view,
+        layer: layer
+      });
+
+      view.ui.add(magnifier, "manual");
     });
   </script>
 </head>
