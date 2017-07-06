@@ -38,137 +38,241 @@
 
 ---
 
-# About Widgets: More details in the SDK
+## Accessor
 
-* [Implementing Accessor](https://developers.arcgis.com/javascript/latest/guide/implementing-accessor/index.html)
-* [Widget Development](https://developers.arcgis.com/javascript/latest/guide/custom-widget/index.html#)
-
----
-
-# Widget framework
-
-- [JSX](https://facebook.github.io/react/docs/introducing-jsx.html)
-- Lifecycle
-- Properties
-- Methods
-- Events
+- JavaScript API Foundation
+- Consistent developer experience
+- TypeScript support
 
 ---
 
-# Widget Framework: About
+## Accessor - Unified Object Constructor
 
-`esri/widgets/Widget`: Our new widget framework
+```js
+var view = new MapView({
+  container: "viewDiv",
+  map: map
+});
 
-- Accessor-based
-- Built with TypeScript
+var symbol = new SimpleMarkerSymbol({
+  style: "square",
+  color: "blue"
+});
 
----
-
-# Widget Framework: [JSX](https://facebook.github.io/react/docs/introducing-jsx.html)
-
-- JavaScript extension **syntax**
-- adds XML syntax to JavaScript
-- Looks similar to HTML
-- Can use JS inline!
-
-```xml
-<div class={classLookup.hello}
-  onclick={this._handleClick}
-  tabIndex={0}>
-  Hello World
-</div>
+var widget = new BasemapToggle({
+  view: view,
+  nextBasemap: "hybrid"
+});
 ```
 
 ---
 
-# Widget Framework: Lifecycle
+## Accessor - Defining Properties (getters + setters)
 
-- `constructor()`
-- `postInitialize()`
-- `render()`
-- `destroy()`
+```js
+var Foo = Accessor.createSubclass({
+  properties: {
+
+    // read-only
+    foo: { readOnly: true, value: new Foo() },
+
+    // aliased
+    bar: { aliasOf: "foo" },
+
+    // autocast
+    baz: { type: SomeClass }
+  }
+});
+```
 
 ---
 
-# `constructor()`
+## Accessor - Property watching
 
+```js
+// watch for changes using a property chain
+view.watch("map.basemap.title", handleTitleChange);
+
+// watch for changes to multiple properties
+view.watch("stationary, interacting", handleViewPropChange);
 ```
-constructor(params?: any) {
-  super();
-  // Do some stuff!
+
+---
+
+# TypeScript
+
+- Superset of JavaScript
+- Compiled to JavaScript
+- Statically type-checked
+- Syntactic sugar... sweet!
+  - Use ES6 syntax while targeting ES5 environments
+
+---
+
+# Type safety
+
+```ts
+let view: MapView | SceneView;
+
+// ...
+
+/*
+ * TS2322: Type '"not-a-view"' is not assignable
+ * to type 'MapView | SceneView'.
+ */
+view = "not-a-view";
+```
+
+---
+
+# Typings
+
+Help describe what things are:
+
+```ts
+type PresenterName = "Alan" | "Matt" | "JC";
+
+interface Person {
+  name: string;
+  age: number;
+}
+
+interface Presenter extends Person {
+  name: PresenterName;
 }
 ```
 
 ---
 
-# `postInitialize()`
+# JS of the future, now
 
+Fat arrow functions
+
+```ts
+const someFn = () => { /* ... */ };
+
+// instead of
+
+const someFn = function () { /* ... */ }.bind(this);
 ```
-postInitialize() {
-  this.own(
-    watchUtils.on(this, "property", => this._propertyChanged)
-  );
+
+---
+
+# JS of the future, now
+
+Template strings
+
+```ts
+const text = `Hello. Nice to meet you, ${user.name}.`;
+
+// instead of
+
+const text = "Hello. Nice to meet you, " + user.name + ".";
+```
+
+---
+
+# JS of the future, now
+
+Destructuring
+
+```ts
+const { map, zoom, scale } = view;
+
+// instead of
+
+const map = view.map;
+const zoom = view.zoom;
+const scale = view.scale;
+```
+
+---
+
+# JS of the future, now
+
+Rest Parameters
+
+```ts
+function ignoreFirst(first, ...theRest) {
+  console.log(theRest);
+}
+
+// instead of
+
+function ignoreFirst() {
+  var theRest = Array.prototype.slice.call(arguments, 1);
+
+  console.log(theRest);
 }
 ```
 
 ---
 
-# `render()`
+# JS of the future, now
 
-- Return JSX
-- Virtual DOM
+Decorators
 
+```ts
+@log()
+foo = "foo";
 ```
-render() {
-  return (
-    <button>{this.title}</button>
-  );
+
+---
+
+# TypeScript IDE Support
+
+- Visual Studio: 2015/2013, Code
+- WebStorm
+- Sublime Text
+- Atom
+- Eclipse
+- Brackets
+- Emacs
+- Vim
+
+---
+
+# TypeScript + JS API 4
+
+- Install TypeScript
+- Install JavaScript API typings
+- Start writing code!
+
+[TypeScript setup](https://developers.arcgis.com/javascript/latest/guide/typescript-setup/index.html)
+
+---
+
+# Let's see some widget decorators
+
+---
+
+# Creating a class
+
+## `@subclass` + `declared`
+
+```ts
+@subclass("example.Foo")
+class Foo extends declared(Accessor) {
+  // ...
 }
 ```
 
-[Widget rendering (SDK)](https://developers.arcgis.com/javascript/latest/guide/custom-widget/index.html#widget-rendering)
-
 ---
 
-# `destroy()`
+# Creating a class: multiple inheritance pattern
 
-```
-destroy() {
-  // cleanup listeners
-  // destroy other widgets
-  // dereference variables
-  // etc.
+## `@subclass` + `declared`
+
+```ts
+interface Foo extends Bar, Baz {}
+
+@subclass("example.Foo")
+class Foo extends declared(Accessor, Bar, Baz) {
+  // ...
 }
 ```
 
 ---
-
-# Framework: Getting/Setting Properties
-
-```
-// normal setting of a prop
-myWidget.property = value;
-```
-
-```
-// normal getting of a prop
-console.log(myWidget.property);
-```
-
-```
-// internal set property
-// will not trigger setter
-this._set("property", propertyValue);
-```
-
-```
-// internal get property
-// will not trigger getter
-this._get("property");
-```
-
----
-
 
 # Defining a property
 
@@ -295,6 +399,137 @@ title = "hello";
   "viewModel.bar"
 ])
 viewModel = new ViewModel();
+```
+
+---
+
+# More details in the SDK
+
+* [Implementing Accessor](https://developers.arcgis.com/javascript/latest/guide/implementing-accessor/index.html)
+* [Widget Development](https://developers.arcgis.com/javascript/latest/guide/custom-widget/index.html#)
+
+---
+
+# Widget framework
+
+- [JSX](https://facebook.github.io/react/docs/introducing-jsx.html)
+- Lifecycle
+- Properties
+- Methods
+- Events
+
+---
+
+# Widget Framework: About
+
+`esri/widgets/Widget`: Our new widget framework
+
+- Accessor-based
+- Built with TypeScript
+
+---
+
+# Widget Framework: [JSX](https://facebook.github.io/react/docs/introducing-jsx.html)
+
+- JavaScript extension **syntax**
+- adds XML syntax to JavaScript
+- Looks similar to HTML
+- Can use JS inline!
+
+```xml
+<div class={classLookup.hello}
+  onclick={this._handleClick}
+  tabIndex={0}>
+  Hello World
+</div>
+```
+
+---
+
+# Widget Framework: Lifecycle
+
+- `constructor()`
+- `postInitialize()`
+- `render()`
+- `destroy()`
+
+---
+
+# `constructor()`
+
+```
+constructor(params?: any) {
+  super();
+  // Do some stuff!
+}
+```
+
+---
+
+# `postInitialize()`
+
+```
+postInitialize() {
+  this.own(
+    watchUtils.on(this, "property", => this._propertyChanged)
+  );
+}
+```
+
+---
+
+# `render()`
+
+- Return JSX
+- Virtual DOM
+
+```
+render() {
+  return (
+    <button>{this.title}</button>
+  );
+}
+```
+
+[Widget rendering (SDK)](https://developers.arcgis.com/javascript/latest/guide/custom-widget/index.html#widget-rendering)
+
+---
+
+# `destroy()`
+
+```
+destroy() {
+  // cleanup listeners
+  // destroy other widgets
+  // dereference variables
+  // etc.
+}
+```
+
+---
+
+# Framework: Getting/Setting Properties
+
+```
+// normal setting of a prop
+myWidget.property = value;
+```
+
+```
+// normal getting of a prop
+console.log(myWidget.property);
+```
+
+```
+// internal set property
+// will not trigger setter
+this._set("property", propertyValue);
+```
+
+```
+// internal get property
+// will not trigger getter
+this._get("property");
 ```
 
 ---
