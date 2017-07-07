@@ -32,6 +32,84 @@
 
 ---
 
+# Widget Theming
+
+- Out of the box themes
+- SDK: Styling topic
+- [Sass](http://sass-lang.com/)
+- [BEM](http://getbem.com/)
+
+---
+
+# Widget Theming: Guide
+
+- [SDK Guide: Styles](https://developers.arcgis.com/javascript/latest/guide/styling/index.html)
+
+---
+
+# Demo: Out of the box theming
+
+<!-- .slide: data-background="images/demo-background.png" -->
+
+---
+
+# Widget Theming: Sass
+
+- CSS preprocessor
+- Variables
+- `@mixin` (group statements)
+- `@include` - (use mixins)
+- `@import` - (split up files)
+- `@extend` - (inheritance)
+- More power!
+
+---
+
+# Sass makes it easier to...
+
+- Restyle
+- Theme
+- Modular / DRY
+- Be organized
+- Write less code :)
+
+---
+
+# Sass Install
+
+- [Installing Sass](http://sass-lang.com/install)
+- [Themes source on Github](https://github.com/Esri/jsapi-resources/blob/master/4.x/bower/dojo/SASS.md)
+
+---
+
+# Widget Theming: BEM
+
+- [BEM](http://getbem.com/): Block Element Modifier
+- Methodology to create reusable components
+- Uses delimiters to separate block, element, modifiers
+- Provides semantics (albeit verbose)
+- Keeps specificity low
+- Scopes styles to blocks
+
+```css
+/* block */
+.example-widget {}
+
+/* block__element */
+.example-widget__input {}
+.example-widget__submit {}
+
+/* block--modifier */
+.example-widget--loading {}
+
+/* block__element--modifier */
+.example-widget__submit--disabled {}
+```
+
+---
+
+<!-- Presenter: JC -->
+
 # Widget Framework: About
 
 - `esri/widgets/Widget` 4x widget framework
@@ -41,8 +119,6 @@
   - [Implementing Accessor](https://developers.arcgis.com/javascript/latest/guide/implementing-accessor/index.html)
 
 ---
-
-<!-- Presenter: JC -->
 
 # Widget framework: Widget Base
 
@@ -402,84 +478,6 @@ this.emit("my-event", {...});
   type: MyViewModel
 })
 viewModel: MyViewModel = new MyViewModel();
-```
-
----
-
-<!-- Presenter: Matt -->
-
-# Widget Theming
-
-- Out of the box themes
-- SDK: Styling topic
-- [Sass](http://sass-lang.com/)
-- [BEM](http://getbem.com/)
-
----
-
-# Widget Theming: Guide
-
-- [SDK Guide: Styles](https://developers.arcgis.com/javascript/latest/guide/styling/index.html)
-
----
-
-# Demo: Out of the box theming
-
-<!-- .slide: data-background="images/demo-background.png" -->
-
----
-
-# Widget Theming: Sass
-
-- CSS preprocessor
-- Variables
-- `@mixin` (group statements)
-- `@include` - (use mixins)
-- `@import` - (split up files)
-- `@extend` - (inheritance)
-- More power!
-
----
-
-# Sass makes it easier to...
-
-- Restyle
-- Theme
-- Modular / DRY
-- Be organized
-- Write less code :)
-
----
-
-# Sass Install
-
-- [Installing Sass](http://sass-lang.com/install)
-- [Themes source on Github](https://github.com/Esri/jsapi-resources/blob/master/4.x/bower/dojo/SASS.md)
-
----
-
-# Widget Theming: BEM
-
-- [BEM](http://getbem.com/): Block Element Modifier
-- Methodology to create reusable components
-- Uses delimiters to separate block, element, modifiers
-- Provides semantics (albeit verbose)
-- Keeps specificity low
-- Scopes styles to blocks
-
-```css
-/* block */
-.example-widget {}
-
-/* block__element */
-.example-widget__input {}
-.example-widget__submit {}
-
-/* block--modifier */
-.example-widget--loading {}
-
-/* block__element--modifier */
-.example-widget__submit--disabled {}
 ```
 
 ---
