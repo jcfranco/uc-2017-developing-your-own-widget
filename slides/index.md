@@ -494,6 +494,11 @@ viewModel: MyViewModel = new MyViewModel();
 
 <!-- .slide: data-background="images/demo-background.png" -->
 
+[HTML Steps]()
+[ViewModel Steps]()
+[View Steps]()
+[Sass Steps]()
+
 ---
 
 # Tips & Tricks
