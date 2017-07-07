@@ -1,6 +1,6 @@
 # Developing Your Own Widget with the ArcGIS API for JavaScript
 
-[Preview presentation](./slides/#/)
+[Preview presentation](https://jcfranco.github.io/uc-2017-developing-your-own-widget/slides/#/)
 
 To be presented at [Esri User Conference 2017](http://www.esri.com/about/events/uc).
 
