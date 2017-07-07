@@ -21,22 +21,9 @@
     }
   </style>
 
-  <script>
-    var href = location.href;
-    var demoLocation = href.slice(0, href.lastIndexOf("/"));
-    var dojoConfig = {
-      async: true,
-      packages: [{
-        name: "demo",
-        location: demoLocation + "/app"
-      }]
-    };
-  </script>
   <script src="https://js.arcgis.com/4.4/"></script>
 
   <script>
-    var magnifier;
-
     require([
       "esri/Map",
       "esri/views/MapView",
@@ -50,10 +37,6 @@
 
       var map = new Map({
         basemap: "dark-gray"
-      });
-
-      var layer = new TileLayer({
-        url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer"
       });
 
       var view = new MapView({

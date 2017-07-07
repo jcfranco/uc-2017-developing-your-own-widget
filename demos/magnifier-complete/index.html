@@ -36,8 +36,6 @@
   <script src="https://js.arcgis.com/4.4/"></script>
 
   <script>
-    var magnifier;
-
     require([
       "esri/Map",
       "esri/views/MapView",
@@ -55,10 +53,6 @@
         basemap: "dark-gray"
       });
 
-      var layer = new TileLayer({
-        url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer"
-      });
-
       var view = new MapView({
         container: "viewDiv",
         zoom: 15,
@@ -66,7 +60,11 @@
         map: map
       });
 
-      magnifier = new Magnifier({
+      var layer = new TileLayer({
+        url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer"
+      });
+
+      var magnifier = new Magnifier({
         view: view,
         layer: layer
       });
