@@ -1,4 +1,5 @@
 <!-- .slide: data-background="images/start-background.png" -->
+<!-- Presenter: Matt -->
 
 # Developing Your Own Widget with the ArcGIS API for JavaScript
 
@@ -31,36 +32,25 @@
 
 ---
 
-# About Widgets: Prerequisites
+# Widget Framework: About
 
-- Accessor (`esri/core/Accessor`)
-- TypeScript
-
----
-
-# About Widgets: More details in the SDK
-
-* [Implementing Accessor](https://developers.arcgis.com/javascript/latest/guide/implementing-accessor/index.html)
-* [Widget Development](https://developers.arcgis.com/javascript/latest/guide/custom-widget/index.html#)
+- `esri/widgets/Widget` 4x widget framework
+- [Widget Development](https://developers.arcgis.com/javascript/latest/guide/custom-widget/index.html#)
+  - Built with TypeScript
+  - Accessor-based (`esri/core/Accessor`)
+  - [Implementing Accessor](https://developers.arcgis.com/javascript/latest/guide/implementing-accessor/index.html)
 
 ---
 
-# Widget framework
+<!-- Presenter: JC -->
+
+# Widget framework: Widget Base
 
 - [JSX](https://facebook.github.io/react/docs/introducing-jsx.html)
 - Lifecycle
 - Properties
 - Methods
 - Events
-
----
-
-# Widget Framework: About
-
-`esri/widgets/Widget`: Our new widget framework
-
-- Accessor-based
-- Built with TypeScript
 
 ---
 
@@ -299,6 +289,8 @@ viewModel = new ViewModel();
 
 ---
 
+<!-- Presenter: Matt -->
+
 # Framework: ViewModels
 
 (The brain)
@@ -414,6 +406,8 @@ viewModel: MyViewModel = new MyViewModel();
 
 ---
 
+<!-- Presenter: Matt -->
+
 # Widget Theming
 
 - Out of the box themes
@@ -496,7 +490,7 @@ viewModel: MyViewModel = new MyViewModel();
 
 [HTML Steps]()
 [ViewModel Steps]()
-[View Steps]()
+[View Steps]() <!-- Presenter: JC -->
 [Sass Steps]()
 
 ---
@@ -508,6 +502,8 @@ viewModel: MyViewModel = new MyViewModel();
 - i18n
 
 ---
+
+<!-- Presenter: Matt -->
 
 # Rethinking Widget APIs
 
