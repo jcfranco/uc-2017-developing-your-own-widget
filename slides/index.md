@@ -493,62 +493,11 @@ viewModel: MyViewModel = new MyViewModel();
 
 ---
 
-# Tips & Tricks
-
-- Collections
-- Accessibility
-- i18n
-
----
-
 <!-- Presenter: Matt -->
 
-# Rethinking Widget APIs
+# Lets Recap
 
-- Using `esri/core/Collection` instead of Arrays
-- Using `esri/core/Accessor` instead of plain objects
-- Adding properties to manage widget state
-- Hiding nodes with Widget framework JSX instead of CSS
-  - setting JSX node to null when necessary
-- Private/protected variables
-
----
-
-# Accessibility
-
-- tabindex
-- [ARIA roles](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques)
-- keyboard events
-
----
-
-# i18n
-
-Import language file
-
-```js
-import * as i18n from "dojo/i18n!./MyWidget/nls/MyWidget";
-```
-
-Setup root language file with languages
-
-```js
-// "/nls/MyWidget"
-define({
-  root: ({
-    helloWorld: "Hello World"
-  }),
-  "es": 1
-});
-```
-
-Setup other languages. (\es\)
-```js
-// "/nls/es/MyWidget"
-define({
-  helloWorld: "Hola Mundo"
-});
-```
+TODO
 
 ---
 
