@@ -20,9 +20,9 @@
 
 # About Widgets
 
-- What?
-  - Encapsulated
-  - Cohesive
+- What are widgets?
+  - Encapsulated UI components
+  - Cohesive (integrated, unified)
   - Single-purpose pieces of functionality
 - Why?
   - Reusable
@@ -50,6 +50,8 @@
 # Demo: Out of the box theming
 
 <!-- .slide: data-background="images/demo-background.png" -->
+
+[Theme Swither](../demos/themes/)
 
 ---
 
@@ -418,7 +420,7 @@ viewModel: MyViewModel = new MyViewModel();
 Public Methods
 
 ```
-public myMethod() {}
+myMethod() {}
 ```
 
 Private Methods
@@ -486,8 +488,8 @@ viewModel: MyViewModel = new MyViewModel();
 
 <!-- .slide: data-background="images/demo-background.png" -->
 
-[HTML Steps]()
-[ViewModel Steps]()
+[HTML Steps](https://github.com/jcfranco/uc-2017-developing-your-own-widget/blob/master/demos/HTML-steps.md)
+[ViewModel Steps](https://github.com/jcfranco/uc-2017-developing-your-own-widget/blob/master/demos/ViewModel-steps.md)
 [View Steps]() <!-- Presenter: JC -->
 [Sass Steps]()
 
@@ -498,6 +500,15 @@ viewModel: MyViewModel = new MyViewModel();
 # Lets Recap
 
 TODO
+
+- Widgets are single functionality ui components
+- We use them for reusability/interchangability
+- Widget Themes
+  - SASS
+- Widget Framework
+- Constructing a widget
+  - ViewModels
+  - Views
 
 ---
 
