@@ -19,7 +19,7 @@
     "node_modules/dojo-typings/dojox/1.11/modules.d.ts"
   ],
   "include": [
-    "./demos/*",
+    "./demos/**/*",
     "./typings/*"
   ],
   "exclude": [
