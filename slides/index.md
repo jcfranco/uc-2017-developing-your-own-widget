@@ -129,11 +129,12 @@
 
 # About
 
-- `esri/widgets/Widget`
-- [Widget Development](https://developers.arcgis.com/javascript/latest/guide/custom-widget/index.html#)
-  - Built with TypeScript
-  - Accessor-based (`esri/core/Accessor`)
-  - [Implementing Accessor](https://developers.arcgis.com/javascript/latest/guide/implementing-accessor/index.html)
+- Views + ViewModels         <!-- .element: class="fragment" data-fragment-index="1" -->
+ - Separation of concerns    <!-- .element: class="fragment" data-fragment-index="2" -->
+ - Reusable                  <!-- .element: class="fragment" data-fragment-index="3" -->
+   - UI replacement            <!-- .element: class="fragment" data-fragment-index="4" -->
+   - Easier integration     <!-- .element: class="fragment" data-fragment-index="5" -->
+- Built with TypeScript     <!-- .element: class="fragment" data-fragment-index="6" -->
 
 ---
 
