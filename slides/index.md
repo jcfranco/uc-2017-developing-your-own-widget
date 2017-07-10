@@ -39,16 +39,16 @@
 
 # About
 
-- Out-of-the-box themes
-- SDK: Styling topic
-- [Sass](http://sass-lang.com/)
-- [BEM](http://getbem.com/)
+- Out-of-the-box themes             <!-- .element: class="fragment" data-fragment-index="1" -->
+- SDK: Styling topic                <!-- .element: class="fragment" data-fragment-index="2" -->
+- [Sass](http://sass-lang.com/)     <!-- .element: class="fragment" data-fragment-index="3" -->
+- [BEM](http://getbem.com/)         <!-- .element: class="fragment" data-fragment-index="4" -->
 
 ---
 
 # Guide
 
-- [SDK Guide: Styles](https://developers.arcgis.com/javascript/latest/guide/styling/index.html)
+[SDK Guide: Styles](https://developers.arcgis.com/javascript/latest/guide/styling/index.html)
 
 ---
 
@@ -64,23 +64,21 @@
 
 # Sass
 
-- CSS preprocessor
-- Variables
-- `@mixin` (group statements)
-- `@include` - (use mixins)
-- `@import` - (split up files)
-- `@extend` - (inheritance)
-- More power!
+- CSS preprocessor                  <!-- .element: class="fragment" data-fragment-index="1" -->
+- Powered-up CSS                     <!-- .element: class="fragment" data-fragment-index="2" -->
+  - Variables                         <!-- .element: class="fragment" data-fragment-index="3" -->
+  - Functions                         <!-- .element: class="fragment" data-fragment-index="4" -->
+  - Mixins                            <!-- .element: class="fragment" data-fragment-index="5" -->
+  - Inheritance                       <!-- .element: class="fragment" data-fragment-index="6" -->
 
 ---
 
 # Sass makes it easier to...
 
-- Restyle
-- Theme
-- Modular / DRY
-- Be organized
-- Write less code :)
+- Restyle                            <!-- .element: class="fragment" data-fragment-index="1" -->
+- Theme                              <!-- .element: class="fragment" data-fragment-index="2" -->
+- Organize                           <!-- .element: class="fragment" data-fragment-index="3" -->
+- Write less code :)                 <!-- .element: class="fragment" data-fragment-index="4" -->
 
 ---
 
@@ -91,17 +89,13 @@
 
 ---
 
-# [BEM](http://getbem.com/): Block Element Modifier
+# [BEM](http://getbem.com/)
 
-- Methodology to create reusable components
-- Uses delimiters to separate block, element, modifiers
-- Provides semantics (albeit verbose)
-- Keeps specificity low
-- Scopes styles to blocks
+#### Block Element Modifier
 
----
-
-# [BEM](http://getbem.com/): Block Element Modifier
+- Semantic                      <!-- .element: class="fragment" data-fragment-index="1" -->
+- Low specificity               <!-- .element: class="fragment" data-fragment-index="2" -->
+- Scopes styles to blocks       <!-- .element: class="fragment" data-fragment-index="3" -->
 
 ```css
 /* block */
@@ -109,14 +103,14 @@
 
 /* block__element */
 .example-widget__input {}
-.example-widget__submit {}
 
 /* block--modifier */
 .example-widget--loading {}
 
 /* block__element--modifier */
-.example-widget__submit--disabled {}
+.example-widget__input--disabled {}
 ```
+<!-- .element: class="fragment" data-fragment-index="4" -->
 
 ---
 
