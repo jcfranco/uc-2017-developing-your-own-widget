@@ -97,6 +97,7 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
             this._enabledChange(this.enabled);
         };
         MagnifierViewModel.prototype._viewChange = function (view) {
+            console.log("view changed");
             this._removeViewpointHandle();
             if (!view) {
                 this._set("magnifierView", null);
@@ -116,6 +117,7 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
             this._set("magnifierView", magnifierView);
         };
         MagnifierViewModel.prototype._enabledChange = function (enabled) {
+            console.log("enabled changed");
             var handle = this._viewpointHandle;
             if (!handle) {
                 return;
@@ -125,6 +127,7 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
                 handle.pause();
         };
         MagnifierViewModel.prototype._viewpointChange = function () {
+            console.log("viewpoint changed");
             var magView = this.get("magnifierView");
             var view = this.get("view");
             if (!view || !magView) {
@@ -136,6 +139,7 @@ define(["require", "exports", "esri/core/tsSupport/declareExtendsHelper", "esri/
             });
         };
         MagnifierViewModel.prototype._layerChange = function (newLayer, oldLayer) {
+            console.log("layer changed");
             var map = this.get("magnifierView.map");
             if (!map) {
                 return;
