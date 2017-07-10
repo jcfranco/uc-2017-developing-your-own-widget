@@ -139,6 +139,54 @@
 
 ---
 
+# TypeScript
+
+- Typed JavaScript <!-- .element: class="fragment" data-fragment-index="1" -->
+
+```ts
+let view: MapView | SceneView;
+
+// later...
+
+// TS2322: Type '"not-a-view"' is not assignable
+// to type 'MapView | SceneView'.
+view = "not-a-view";
+```
+<!-- .element: class="fragment hidden" data-fragment-index="2" -->
+
+---
+
+# TypeScript
+
+- JS of the future, now
+
+```ts
+// const
+const numbers = [1, 2, 3];
+
+// fat arrow functions
+letters.forEach(letter => console.log(letter));
+
+// template literals
+const myString = `last number: ${ numbers[ numbers.length - 1 ] }`;
+
+// decorators
+class Example {
+  @log
+  stringify(item: object): string { /* ... */ }
+}
+```
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+---
+
+# TypeScript
+
+- IDE support
+  - Visual Studio, WebStorm, Sublime, and more!  <!-- .element: class="fragment" data-fragment-index="1" -->
+
+---
+
 # Widget Framework: Widget Base
 
 - [JSX](https://facebook.github.io/react/docs/introducing-jsx.html)
