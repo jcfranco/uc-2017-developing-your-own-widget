@@ -361,7 +361,7 @@ viewModel = new ViewModel();
 
 <!-- Presenter: Matt -->
 
-# Framework: ViewModels
+# ViewModels
 
 (The brain)
 
@@ -379,7 +379,7 @@ viewModel = new ViewModel();
 
 ---
 
-# Widget Framework: Views
+# Views
 
 (The face)
 
@@ -396,34 +396,7 @@ viewModel = new ViewModel();
 
 ---
 
-# Views: Defining ViewModel
-
-```
-@property({
-  type: MyViewModel
-})
-viewModel: MyViewModel = new MyViewModel();
-```
-
----
-
-# Widget Framework: Method Convention
-
-Public Methods
-
-```
-myMethod() {}
-```
-
-Private Methods
-
-```
-private _myMethod() {}
-```
-
----
-
-# Widget Framework: Events
+# Events
 
 - Views have ability to `emit()` an event.
 - ViewModel needs to import `dojo/evented` in order to `emit()`
@@ -431,7 +404,7 @@ private _myMethod() {}
 
 ---
 
-# Widget Framework: View Events
+# View Events
 
 - Widget views extend `dojo/Evented`
 
@@ -441,7 +414,7 @@ this.emit("my-event", {...});
 
 ---
 
-# Widget Framework: ViewModel Events
+# ViewModel Events
 
 #### 1. Import evented
 
@@ -464,7 +437,7 @@ this.emit("my-event", {...});
 
 ---
 
-# Widget Framework: Aliased View Events
+# Aliased View Events
 
 ```
 @vmEvent("my-event")
