@@ -25,7 +25,8 @@
 3. Require our magnifier widget we will create soon and a layer it will use
 
 ```
-"demo/Magnifier",
+//"demo/Magnifier",
+"demo/Magnifier/MagnifierViewModel",
 "esri/layers/TileLayer",
 ```
 
@@ -40,7 +41,7 @@ var layer = new TileLayer({
 5. Initialize Magnifier
 
 ```
-var magnifier = new Magnifier({
+magnifier = new MagnifierViewModel({
   view: view,
   layer: layer
 });
@@ -49,5 +50,5 @@ var magnifier = new Magnifier({
 6. Add initialized Magnifier to the view UI using manual positioning
 
 ```
-view.ui.add(magnifier, "manual");
+// view.ui.add(magnifier, "manual");
 ```

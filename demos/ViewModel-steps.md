@@ -29,6 +29,8 @@ export = MagnifierViewModel;
 3. Import other required classes
 
 ```
+import watchUtils = require("esri/core/watchUtils");
+
 import Map = require("esri/Map");
 
 import MapView = require("esri/views/MapView");
@@ -153,6 +155,12 @@ interface PausableHandle extends IHandle {
   10. Lastly, we'll need to add the actual brain work of our widget in private methods.
 
   ```
+  //--------------------------------------------------------------------------
+  //
+  //  Private Methods
+  //
+  //--------------------------------------------------------------------------
+
   private _removeViewpointHandle(): void {
     if (!this._viewpointHandle) {
       return;
@@ -176,6 +184,7 @@ interface PausableHandle extends IHandle {
   }
 
   private _viewChange(view: MapView | SceneView): void {
+    console.log("view changed");
     this._removeViewpointHandle();
 
     if (!view) {
@@ -202,6 +211,7 @@ interface PausableHandle extends IHandle {
   }
 
   private _enabledChange(enabled: boolean): void {
+    console.log("enabled changed");
     const handle = this._viewpointHandle;
     if (!handle) {
       return;
@@ -213,6 +223,7 @@ interface PausableHandle extends IHandle {
   }
 
   private _viewpointChange(): void {
+    console.log("viewpoint changed");
     const magView = this.get<MapView | SceneView>("magnifierView");
     const view = this.get<MapView | SceneView>("view");
 
@@ -227,6 +238,7 @@ interface PausableHandle extends IHandle {
   }
 
   private _layerChange(newLayer: Layer, oldLayer: Layer): void {
+    console.log("layer changed");
     const map = this.get<Map>("magnifierView.map");
 
     if (!map) {
