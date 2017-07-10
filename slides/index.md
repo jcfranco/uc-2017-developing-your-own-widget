@@ -189,7 +189,7 @@ class Example {
 # `esri/widgets/Widget`
 
 - Lifecycle         <!-- .element: class="fragment" data-fragment-index="1" -->
-- API consistecy    <!-- .element: class="fragment" data-fragment-index="2" -->
+- API consistency    <!-- .element: class="fragment" data-fragment-index="2" -->
   - Properties      <!-- .element: class="fragment" data-fragment-index="3" -->
   - Methods         <!-- .element: class="fragment" data-fragment-index="3" -->
   - Events          <!-- .element: class="fragment" data-fragment-index="3" -->
@@ -474,10 +474,10 @@ viewModel: MyViewModel = new MyViewModel();
 
 <!-- Presenter: Matt -->
 
-# Lets Recap
+# Let's Recap
 
-- Widgets are single functionality ui components
-- We use them for reusability/interchangability
+- Widgets are single functionality UI components
+- We use them for reusability/interchangeability
 - Widget Themes
   - SASS
 - Widget Framework
@@ -487,7 +487,7 @@ viewModel: MyViewModel = new MyViewModel();
 
 ---
 
-## Suggested Sessions
+## Suggested Session
 
 - [ArcGIS API for JavaScript: Customizing Widgets
 ](https://userconference2017.schedule.esri.com/schedule/2040749922)
