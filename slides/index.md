@@ -140,6 +140,41 @@
 
 ---
 
+# ViewModels
+
+(The brain)
+
+- Core logic of widget resides here
+- Provides necessary APIs for the view to do it's thing
+- No DOM/UI concerns (think business logic)
+
+---
+
+# ViewModels: Why?
+
+- Framework integration
+- Reusability
+- Separates concerns
+
+---
+
+# Views
+
+(The face)
+
+- `esri/widgets/Widget`
+- Uses ViewModel APIs to render the UI
+- View-specific logic resides here
+
+---
+
+# Views: Why?
+
+- Separates concerns
+- Framework compatibility
+
+---
+
 # TypeScript
 
 - Typed JavaScript <!-- .element: class="fragment" data-fragment-index="1" -->
@@ -362,41 +397,6 @@ viewModel = new ViewModel();
 ---
 
 <!-- Presenter: Matt -->
-
-# ViewModels
-
-(The brain)
-
-- Core logic of widget resides here
-- Provides necessary APIs for the view to do it's thing
-- No DOM/UI concerns (think business logic)
-
----
-
-# ViewModels: Why?
-
-- Framework integration
-- Reusability
-- Separates concerns
-
----
-
-# Views
-
-(The face)
-
-- `esri/widgets/Widget`
-- Uses ViewModel APIs to render the UI
-- View-specific logic resides here
-
----
-
-# Views: Why?
-
-- Separates concerns
-- Framework compatibility
-
----
 
 # Let's build a widget!
 
