@@ -39,7 +39,7 @@
 
 # Widget Theming: About
 
-- Out of the box themes
+- Out-of-the-box themes
 - SDK: Styling topic
 - [Sass](http://sass-lang.com/)
 - [BEM](http://getbem.com/)
@@ -52,11 +52,13 @@
 
 ---
 
-# Demo: Out of the box theming
+# Out-of-the-box themes
 
 <!-- .slide: data-background="images/demo-background.png" -->
 
 [Theme Switcher](../demos/themes/)
+
+<img src="images/theme-switcher.png" width="50%"/>
 
 ---
 
@@ -499,7 +501,17 @@ viewModel: MyViewModel = new MyViewModel();
 
 ---
 
-# Demo: Let's build a widget!
+# Let's build a widget!
+
+<!-- .slide: data-background="images/demo-background.png" -->
+
+[Magnifier](https://jcfranco.github.io/uc-2017-developing-your-own-widget/demos/magnifier-complete)
+
+<img src="images/magnifier.png" width="50%"/>
+
+---
+
+# Let's build a widget!
 
 <!-- .slide: data-background="images/demo-background.png" -->
 
@@ -509,7 +521,6 @@ viewModel: MyViewModel = new MyViewModel();
 <!-- Presenter: JC -->
 - [View Steps](https://github.com/jcfranco/uc-2017-developing-your-own-widget/blob/master/demos/View-steps.md)
 - [Sass Steps](https://github.com/jcfranco/uc-2017-developing-your-own-widget/blob/master/demos/Sass-steps.md)
-- [Demo Complete](../demos/magnifier-complete/)
 
 ---
 
