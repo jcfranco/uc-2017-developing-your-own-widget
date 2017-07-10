@@ -37,7 +37,7 @@
 
 ---
 
-# Widget Theming: About
+# About
 
 - Out-of-the-box themes
 - SDK: Styling topic
@@ -46,7 +46,7 @@
 
 ---
 
-# Widget Theming: Guide
+# Guide
 
 - [SDK Guide: Styles](https://developers.arcgis.com/javascript/latest/guide/styling/index.html)
 
@@ -62,7 +62,7 @@
 
 ---
 
-# Widget Theming: Sass
+# Sass
 
 - CSS preprocessor
 - Variables
@@ -91,9 +91,8 @@
 
 ---
 
-# Widget Theming: BEM
+# [BEM](http://getbem.com/): Block Element Modifier
 
-- [BEM](http://getbem.com/): Block Element Modifier
 - Methodology to create reusable components
 - Uses delimiters to separate block, element, modifiers
 - Provides semantics (albeit verbose)
@@ -102,8 +101,7 @@
 
 ---
 
-# Widget Theming: BEM
-
+# [BEM](http://getbem.com/): Block Element Modifier
 
 ```css
 /* block */
@@ -129,9 +127,9 @@
 
 ---
 
-# Widget Framework: About
+# About
 
-- `esri/widgets/Widget` 4x widget framework
+- `esri/widgets/Widget`
 - [Widget Development](https://developers.arcgis.com/javascript/latest/guide/custom-widget/index.html#)
   - Built with TypeScript
   - Accessor-based (`esri/core/Accessor`)
@@ -187,121 +185,49 @@ class Example {
 
 ---
 
-# Widget Framework: Widget Base
+# `esri/widgets/Widget`
 
-- [JSX](https://facebook.github.io/react/docs/introducing-jsx.html)
-- Lifecycle
-- Properties
-- Methods
-- Events
-
----
-
-# Widget Framework: [JSX](https://facebook.github.io/react/docs/introducing-jsx.html)
-
-- JavaScript extension **syntax**
-- adds XML syntax to JavaScript
-- Looks similar to HTML
-- Can use JS inline!
-
-```xml
-<div class={classLookup.hello}
-  onclick={this._handleClick}
-  tabIndex={0}>
-  Hello World
-</div>
-```
+- Lifecycle         <!-- .element: class="fragment" data-fragment-index="1" -->
+- API consistecy    <!-- .element: class="fragment" data-fragment-index="2" -->
+  - Properties      <!-- .element: class="fragment" data-fragment-index="3" -->
+  - Methods         <!-- .element: class="fragment" data-fragment-index="3" -->
+  - Events          <!-- .element: class="fragment" data-fragment-index="3" -->
 
 ---
 
-# Widget Framework: Lifecycle
+# Lifecycle
 
-- `constructor()`
-- `postInitialize()`
-- `render()`
-- `destroy()`
-
----
-
-# `constructor()`
-
-```
-constructor(params?: any) {
-  super();
-  // Do some stuff!
-}
-```
+- constructor         <!-- .element: class="fragment" data-fragment-index="1" -->
+- postInitialize      <!-- .element: class="fragment" data-fragment-index="2" -->
+- render              <!-- .element: class="fragment" data-fragment-index="3" -->
+- destroy             <!-- .element: class="fragment" data-fragment-index="8" -->
 
 ---
 
-# `postInitialize()`
+# `render`
 
-```
-postInitialize() {
-  this.own(
-    watchUtils.on(this, "property", => this._propertyChanged)
-  );
-}
-```
+- Defines UI                <!-- .element: class="fragment" data-fragment-index="1" -->
+- Reacts to state           <!-- .element: class="fragment" data-fragment-index="2" -->
+- Uses JSX                  <!-- .element: class="fragment" data-fragment-index="3" -->
 
----
-
-# `render()`
-
-- Return JSX
-- Virtual DOM
-
-```
+```js
 render() {
+  const x = Number(x).toFixed(3);
+  const y = Number(y).toFixed(3);
+  const scale = Number(scale).toFixed(5);
+
   return (
-    <button>{this.title}</button>
+    <div bind={this} class={CSS.base} onclick={this._handleClick}>
+      <p>x: {x}</p>
+      <p>y: {y}</p>
+      <p>scale: {scale}</p>
+    </div>
   );
 }
 ```
-
-[Widget rendering (SDK)](https://developers.arcgis.com/javascript/latest/guide/custom-widget/index.html#widget-rendering)
-
----
-
-# `destroy()`
-
-```
-destroy() {
-  // cleanup listeners
-  // destroy other widgets
-  // dereference variables
-  // etc.
-}
-```
+<!-- .element: class="fragment current-visible" data-fragment-index="4" -->
 
 ---
-
-# Framework: Getting/Setting Properties
-
-```
-// normal setting of a prop
-myWidget.property = value;
-```
-
-```
-// normal getting of a prop
-console.log(myWidget.property);
-```
-
-```
-// internal set property
-// will not trigger setter
-this._set("property", propertyValue);
-```
-
-```
-// internal get property
-// will not trigger getter
-this._get("property");
-```
-
----
-
 
 # Defining a property
 
