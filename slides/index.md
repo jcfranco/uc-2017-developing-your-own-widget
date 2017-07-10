@@ -140,38 +140,63 @@
 
 ---
 
-# ViewModels
-
-(The brain)
-
-- Core logic of widget resides here
-- Provides necessary APIs for the view to do it's thing
-- No DOM/UI concerns (think business logic)
-
----
-
-# ViewModels: Why?
-
-- Framework integration
-- Reusability
-- Separates concerns
-
----
-
 # Views
 
-(The face)
-
-- `esri/widgets/Widget`
-- Uses ViewModel APIs to render the UI
-- View-specific logic resides here
+- Extend esri/widgets/Widget      <!-- .element: class="fragment" data-fragment-index="1" -->
+- Rely on ViewModel                 <!-- .element: class="fragment" data-fragment-index="2" -->
+- Focus on UI                       <!-- .element: class="fragment" data-fragment-index="3" -->
 
 ---
 
-# Views: Why?
+# ViewModels
 
-- Separates concerns
-- Framework compatibility
+- Extend esri/core/Accessor       <!-- .element: class="fragment" data-fragment-index="1" -->
+- Provide APIs to support view                    <!-- .element: class="fragment" data-fragment-index="2" -->
+- Focus on business logic                    <!-- .element: class="fragment" data-fragment-index="3" -->
+
+---
+
+# `esri/widgets/Widget`
+
+- Lifecycle         <!-- .element: class="fragment" data-fragment-index="1" -->
+- API consistency    <!-- .element: class="fragment" data-fragment-index="2" -->
+  - Properties      <!-- .element: class="fragment" data-fragment-index="3" -->
+  - Methods         <!-- .element: class="fragment" data-fragment-index="3" -->
+  - Events          <!-- .element: class="fragment" data-fragment-index="3" -->
+
+---
+
+# Lifecycle
+
+- constructor         <!-- .element: class="fragment" data-fragment-index="1" -->
+- postInitialize      <!-- .element: class="fragment" data-fragment-index="2" -->
+- render              <!-- .element: class="fragment" data-fragment-index="3" -->
+- destroy             <!-- .element: class="fragment" data-fragment-index="8" -->
+
+---
+
+# `render`
+
+- Defines UI                <!-- .element: class="fragment" data-fragment-index="1" -->
+- Reacts to state           <!-- .element: class="fragment" data-fragment-index="2" -->
+- Uses JSX                  <!-- .element: class="fragment" data-fragment-index="3" -->
+
+```js
+render() {
+  const x = Number(x).toFixed(3);
+  const y = Number(y).toFixed(3);
+  const scale = Number(scale).toFixed(5);
+
+  return (
+    <div bind={this} class={CSS.base} onclick={this._handleClick}>
+      <p>x: {x}</p>
+      <p>y: {y}</p>
+      <p>scale: {scale}</p>
+    </div>
+  );
+}
+```
+<!-- .element: class="fragment current-visible" data-fragment-index="4" -->
 
 ---
 
@@ -223,176 +248,107 @@ class Example {
 
 ---
 
-# `esri/widgets/Widget`
+# Defining a class
 
-- Lifecycle         <!-- .element: class="fragment" data-fragment-index="1" -->
-- API consistency    <!-- .element: class="fragment" data-fragment-index="2" -->
-  - Properties      <!-- .element: class="fragment" data-fragment-index="3" -->
-  - Methods         <!-- .element: class="fragment" data-fragment-index="3" -->
-  - Events          <!-- .element: class="fragment" data-fragment-index="3" -->
+```ts
+ /// <amd-dependency path="esri/core/tsSupport/declareExtendsHelper" name="__extends" />
+/// <amd-dependency path="esri/core/tsSupport/decorateHelper" name="__decorate" />
 
----
+import { declared, subclass } from "esri/core/accessorSupport/decorators";
+ 
+import Base = require("my/class/base");
 
-# Lifecycle
+@subclass("MyClass")
+class MyClass extends declared(Base) {
 
-- constructor         <!-- .element: class="fragment" data-fragment-index="1" -->
-- postInitialize      <!-- .element: class="fragment" data-fragment-index="2" -->
-- render              <!-- .element: class="fragment" data-fragment-index="3" -->
-- destroy             <!-- .element: class="fragment" data-fragment-index="8" -->
-
----
-
-# `render`
-
-- Defines UI                <!-- .element: class="fragment" data-fragment-index="1" -->
-- Reacts to state           <!-- .element: class="fragment" data-fragment-index="2" -->
-- Uses JSX                  <!-- .element: class="fragment" data-fragment-index="3" -->
-
-```js
-render() {
-  const x = Number(x).toFixed(3);
-  const y = Number(y).toFixed(3);
-  const scale = Number(scale).toFixed(5);
-
-  return (
-    <div bind={this} class={CSS.base} onclick={this._handleClick}>
-      <p>x: {x}</p>
-      <p>y: {y}</p>
-      <p>scale: {scale}</p>
-    </div>
-  );
 }
+
+export = MyClass;
 ```
-<!-- .element: class="fragment current-visible" data-fragment-index="4" -->
+
+---
+
+# Defining a variable
+
+```ts
+// ...
+
+@subclass("MyClass")
+class MyClass extends declared(Base) {
+
+  // adding variable `_foo` 
+  _foo: Foo = new Foo();
+  
+}
+
+// ...
+```
 
 ---
 
 # Defining a property
 
-## `@property`
-
 ```ts
-@property()
-foo = new Foo();
-```
+// ...
 
----
+@subclass("MyClass")
+class MyClass extends declared(Base) {
 
-# Custom setter
-
-## `@property`
-
-```ts
-@property()
-set myProperty(value: string) {
-  // note internal `_set`
-  this._set("myProperty", value);
-  this._ensureValidity(value);
+  // adding property `foo` 
+  @property()
+  foo: Foo = new Foo();
+  
 }
+
+// ...
 ```
 
 ---
 
-# Computed properties
-
-## `@property`
+# Defining a method
 
 ```ts
-@property({
-  dependsOn: ["firstName, lastName"]
-})
-get fullName() {
-  return `${this.firstName} ${this.lastName}`
+// ...
+
+@subclass("MyClass")
+class MyClass extends declared(Base) {
+
+  // adding method `bar` 
+  bar(): string {
+    return this._getText();
+  }
+  
+  private _getText(): string {
+    // gets text
+  }
+  
 }
+
+// ...
 ```
 
 ---
 
-# Read-only value
+# Widget decorators
 
-## `@property`
-
-```ts
-@property({
-  readOnly: true
-})
-myProperty = "I'm read-only";
-```
-
----
-
-# Autocast
-
-## `@property`
-
-```ts
-@property({
-  type: MyClass
-})
-myProperty;
-```
-
-```
-instance.myProperty = { /* params */ };
-
-console.log(instance.myProperty instance of MyClass); // true
-```
+- @subclass + declared      <!-- .element: class="fragment" data-fragment-index="1" -->
+- @property                 <!-- .element: class="fragment" data-fragment-index="2" -->
+  - auto-casting            <!-- .element: class="fragment" data-fragment-index="3" -->
+  - getter/setter           <!-- .element: class="fragment" data-fragment-index="4" -->
+  - computed                <!-- .element: class="fragment" data-fragment-index="5" -->
+  - read-only               <!-- .element: class="fragment" data-fragment-index="6" -->
+  - aliasing                <!-- .element: class="fragment" data-fragment-index="7" -->
+- @aliasOf                  <!-- .element: class="fragment" data-fragment-index="8" -->
+- @renderable               <!-- .element: class="fragment" data-fragment-index="9" -->
+- @accessibleHandler        <!-- .element: class="fragment" data-fragment-index="10" -->
 
 ---
 
-# Alias a property
+# Recap
 
-## `@property`
-
-```
-@property({ aliasOf: "bar.baz" })
-foo;
-```
-
----
-
-# Alias a property
-
-## `@aliasOf`
-
-```ts
-@aliasOf("bar.baz")
-foo;
-```
-
----
-
-# Handle click and key events
-
-## `@accessibleHandler`
-
-```ts
-@accessibleHandler
-private function _doSomething() {
-  // ...
-}
-```
-
----
-
-# Rendering when properties change
-
-## `@renderable`
-
-```ts
-@property()
-@renderable()
-title = "hello";
-```
-
-```ts
-@property()
-@renderable([
-  "viewModel.foo",
-  "viewModel.bar"
-])
-viewModel = new ViewModel();
-```
+- Views + ViewModels           <!-- .element: class="fragment" data-fragment-index="1" -->
+- esri/widgets/Widget     <!-- .element: class="fragment" data-fragment-index="2" -->
+- TypeScript     <!-- .element: class="fragment" data-fragment-index="3" -->
 
 ---
 
