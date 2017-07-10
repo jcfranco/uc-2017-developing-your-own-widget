@@ -506,8 +506,9 @@ viewModel: MyViewModel = new MyViewModel();
 - [Demo Start](../demos/magnifier-start/)
 - [HTML Steps](https://github.com/jcfranco/uc-2017-developing-your-own-widget/blob/master/demos/HTML-steps.md)
 - [ViewModel Steps](https://github.com/jcfranco/uc-2017-developing-your-own-widget/blob/master/demos/ViewModel-steps.md)
-- [View Steps]() <!-- Presenter: JC -->
-- [Sass Steps]()
+<!-- Presenter: JC -->
+- [View Steps](https://github.com/jcfranco/uc-2017-developing-your-own-widget/blob/master/demos/View-steps.md)
+- [Sass Steps](https://github.com/jcfranco/uc-2017-developing-your-own-widget/blob/master/demos/Sass-steps.md)
 - [Demo Complete](../demos/magnifier-complete/)
 
 ---
