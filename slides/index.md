@@ -31,7 +31,7 @@
 
 ---
 
-<!-- .slide: data-background="images/demo-background.png" -->
+<!-- .slide: data-background="images/section-background.png" -->
 
 # Widget Theming
 
@@ -123,7 +123,7 @@
 ---
 
 <!-- Presenter: JC -->
-<!-- .slide: data-background="images/demo-background.png" -->
+<!-- .slide: data-background="images/section-background.png" -->
 
 # Widget Framework
 
