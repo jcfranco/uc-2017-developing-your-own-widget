@@ -13,7 +13,7 @@
 - About Widgets
 - Widget framework
 - Widget Theming
-- DO IT!
+- CODE!
 - Tips & tricks
 
 ---
@@ -32,7 +32,13 @@
 
 ---
 
+<!-- .slide: data-background="images/demo-background.png" -->
+
 # Widget Theming
+
+---
+
+# Widget Theming: About
 
 - Out of the box themes
 - SDK: Styling topic
@@ -51,7 +57,7 @@
 
 <!-- .slide: data-background="images/demo-background.png" -->
 
-[Theme Swither](../demos/themes/)
+[Theme Switcher](../demos/themes/)
 
 ---
 
@@ -93,6 +99,11 @@
 - Keeps specificity low
 - Scopes styles to blocks
 
+---
+
+# Widget Theming: BEM
+
+
 ```css
 /* block */
 .example-widget {}
@@ -111,6 +122,11 @@
 ---
 
 <!-- Presenter: JC -->
+<!-- .slide: data-background="images/demo-background.png" -->
+
+# Widget Framework
+
+---
 
 # Widget Framework: About
 
@@ -122,7 +138,7 @@
 
 ---
 
-# Widget framework: Widget Base
+# Widget Framework: Widget Base
 
 - [JSX](https://facebook.github.io/react/docs/introducing-jsx.html)
 - Lifecycle
@@ -488,18 +504,18 @@ viewModel: MyViewModel = new MyViewModel();
 
 <!-- .slide: data-background="images/demo-background.png" -->
 
-[HTML Steps](https://github.com/jcfranco/uc-2017-developing-your-own-widget/blob/master/demos/HTML-steps.md)
-[ViewModel Steps](https://github.com/jcfranco/uc-2017-developing-your-own-widget/blob/master/demos/ViewModel-steps.md)
-[View Steps]() <!-- Presenter: JC -->
-[Sass Steps]()
+- [Demo Start](../demos/magnifier-start/)
+- [HTML Steps](https://github.com/jcfranco/uc-2017-developing-your-own-widget/blob/master/demos/HTML-steps.md)
+- [ViewModel Steps](https://github.com/jcfranco/uc-2017-developing-your-own-widget/blob/master/demos/ViewModel-steps.md)
+- [View Steps]() <!-- Presenter: JC -->
+- [Sass Steps]()
+- [Demo Complete](../demos/magnifier-complete/)
 
 ---
 
 <!-- Presenter: Matt -->
 
 # Lets Recap
-
-TODO
 
 - Widgets are single functionality ui components
 - We use them for reusability/interchangability
