@@ -1,3 +1,5 @@
+# Magnifier Widget: HTML Steps
+
 1. Add a stylesheet for our custom magnifier
 
 ```
@@ -20,10 +22,11 @@
 </script>
 ```
 
-3. Require our magnifier widget we will create soon
+3. Require our magnifier widget we will create soon and a layer it will use
 
 ```
 "demo/Magnifier",
+"esri/layers/TileLayer",
 ```
 
 4. Add layer to magnify with widget

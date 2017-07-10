@@ -1,4 +1,4 @@
-# MagnifierViewModel Steps
+# Magnifier Widget: ViewModel Steps
 
 We'll create a ViewModel for our Magnifier widget. The ViewModel will extend `esri/core/Accessor` and be the brains of the widget.
 
