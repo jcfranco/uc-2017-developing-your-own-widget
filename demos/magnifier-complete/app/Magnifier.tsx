@@ -65,8 +65,6 @@ class Magnifier extends declared(Widget) {
     this.own([
       watchUtils.init(this, "viewModel.magnifierView", magnifierView => this._magnifierViewChange(magnifierView)),
       watchUtils.init(this, "viewModel.enabled", enabled => this._enabledChange(enabled)),
-      // todo: should we not recenter? couldn't get mover to update clip right.
-      watchUtils.watch(this, "view.size", () => this.center()),
       watchUtils.on(this, "mover", "Move", () => this._moverMoved())
     ]);
   }
@@ -182,7 +180,6 @@ class Magnifier extends declared(Widget) {
       return;
     }
 
-    // todo: not use dojo?
     const marginBox = domGeometry.getMarginBox(this._moverNode);
     const { x, y } = domGeometry.position(this._moverNode);
 
