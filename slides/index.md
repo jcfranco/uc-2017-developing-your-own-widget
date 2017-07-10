@@ -398,59 +398,6 @@ viewModel = new ViewModel();
 
 ---
 
-# Events
-
-- Views have ability to `emit()` an event.
-- ViewModel needs to import `dojo/evented` in order to `emit()`
-- Views can alias an event with `vmEvent` decorator.
-
----
-
-# View Events
-
-- Widget views extend `dojo/Evented`
-
-```
-this.emit("my-event", {...});
-```
-
----
-
-# ViewModel Events
-
-#### 1. Import evented
-
-```
-import Evented = require("dojo/Evented");
-```
-
-#### 2. Extend Evented
-
-```
-interface MyViewModel extends Evented {
-  ...
-}
-```
-
-#### 3. Emit event when necessary
-```
-this.emit("my-event", {...});
-```
-
----
-
-# Aliased View Events
-
-```
-@vmEvent("my-event")
-@property({
-  type: MyViewModel
-})
-viewModel: MyViewModel = new MyViewModel();
-```
-
----
-
 # Let's build a widget!
 
 <!-- .slide: data-background="images/demo-background.png" -->
