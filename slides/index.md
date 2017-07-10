@@ -402,7 +402,7 @@ viewModel = new ViewModel();
 
 <!-- .slide: data-background="images/demo-background.png" -->
 
-[Magnifier](https://jcfranco.github.io/uc-2017-developing-your-own-widget/demos/magnifier-complete)
+[Magnifier](../demos/magnifier-complete)
 
 <img src="images/magnifier.png" width="50%"/>
 
