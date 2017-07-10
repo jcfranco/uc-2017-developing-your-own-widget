@@ -10,24 +10,30 @@
 
 # Agenda
 
-- About Widgets
+- Widgets
 - Theming
-- Widget framework
+- Widget Framework
 - Putting it all together
 
 ---
 
-# About Widgets
+<!-- .slide: data-background="images/section-background.png" -->
 
-- What are widgets?
-  - Encapsulated UI components
-  - Cohesive (integrated, unified)
-  - Single-purpose pieces of functionality
-- Why?
-  - Reusable
-  - Interchangeable
-- How?
-  - Different frameworks are available
+# Widgets
+
+---
+
+# About
+
+- What?                                         <!-- .element: class="fragment" data-fragment-index="1" -->
+  - Encapsulated UI components                  <!-- .element: class="fragment" data-fragment-index="2" -->
+  - Cohesive (integrated, unified)              <!-- .element: class="fragment" data-fragment-index="3" -->
+  - Single-purpose pieces of functionality      <!-- .element: class="fragment" data-fragment-index="4" -->
+- Why?                                          <!-- .element: class="fragment" data-fragment-index="5" -->
+  - Reusable                                    <!-- .element: class="fragment" data-fragment-index="6" -->
+  - Interchangeable                             <!-- .element: class="fragment" data-fragment-index="7" -->
+- How?                                          <!-- .element: class="fragment" data-fragment-index="8" -->
+  - Different frameworks are available          <!-- .element: class="fragment" data-fragment-index="9" -->
 
 ---
 
@@ -39,16 +45,16 @@
 
 # About
 
-- Out-of-the-box themes             <!-- .element: class="fragment" data-fragment-index="1" -->
-- SDK: Styling topic                <!-- .element: class="fragment" data-fragment-index="2" -->
-- [Sass](http://sass-lang.com/)     <!-- .element: class="fragment" data-fragment-index="3" -->
-- [BEM](http://getbem.com/)         <!-- .element: class="fragment" data-fragment-index="4" -->
-
----
-
-# Guide
-
-[SDK Guide: Styles](https://developers.arcgis.com/javascript/latest/guide/styling/index.html)
+- Why?                  <!-- .element: class="fragment" data-fragment-index="1" -->
+  - Consistency         <!-- .element: class="fragment" data-fragment-index="2" -->
+    - Visual            <!-- .element: class="fragment" data-fragment-index="3" -->
+    - Functional        <!-- .element: class="fragment" data-fragment-index="3" -->
+  - User options        <!-- .element: class="fragment" data-fragment-index="4" -->
+    - Out-of-the-box    <!-- .element: class="fragment" data-fragment-index="5" -->
+    - Custom            <!-- .element: class="fragment" data-fragment-index="6" -->
+- How?                  <!-- .element: class="fragment" data-fragment-index="7" -->
+  - Sass                <!-- .element: class="fragment" data-fragment-index="8" -->
+  - BEM                 <!-- .element: class="fragment" data-fragment-index="9" -->
 
 ---
 
@@ -62,34 +68,27 @@
 
 ---
 
-# Sass
+# Theming with Sass
 
 - CSS preprocessor                  <!-- .element: class="fragment" data-fragment-index="1" -->
 - Powered-up CSS                     <!-- .element: class="fragment" data-fragment-index="2" -->
-  - Variables                         <!-- .element: class="fragment" data-fragment-index="3" -->
-  - Functions                         <!-- .element: class="fragment" data-fragment-index="4" -->
-  - Mixins                            <!-- .element: class="fragment" data-fragment-index="5" -->
-  - Inheritance                       <!-- .element: class="fragment" data-fragment-index="6" -->
+  - Nesting                          <!-- .element: class="fragment" data-fragment-index="3" -->
+  - Variables                         <!-- .element: class="fragment" data-fragment-index="4" -->
+  - Functions                         <!-- .element: class="fragment" data-fragment-index="5" -->
+  - Mixins                            <!-- .element: class="fragment" data-fragment-index="6" -->
+  - Inheritance                       <!-- .element: class="fragment" data-fragment-index="7" -->
 
 ---
 
 # Sass makes it easier to...
 
 - Restyle                            <!-- .element: class="fragment" data-fragment-index="1" -->
-- Theme                              <!-- .element: class="fragment" data-fragment-index="2" -->
 - Organize                           <!-- .element: class="fragment" data-fragment-index="3" -->
 - Write less code :)                 <!-- .element: class="fragment" data-fragment-index="4" -->
 
 ---
 
-# Sass Install
-
-- [Installing Sass](http://sass-lang.com/install)
-- [Themes source on Github](https://github.com/Esri/jsapi-resources/blob/master/4.x/bower/dojo/SASS.md)
-
----
-
-# [BEM](http://getbem.com/)
+# Naming CSS classes: [BEM](http://getbem.com/)
 
 #### Block Element Modifier
 
@@ -97,24 +96,33 @@
 - Low specificity               <!-- .element: class="fragment" data-fragment-index="2" -->
 - Scopes styles to blocks       <!-- .element: class="fragment" data-fragment-index="3" -->
 
-```css
-/* block */
+```scss
+// block
 .example-widget {}
 
-/* block__element */
+// block__element
 .example-widget__input {}
 
-/* block--modifier */
+// block--modifier
 .example-widget--loading {}
 
-/* block__element--modifier */
+// block__element--modifier
 .example-widget__input--disabled {}
 ```
 <!-- .element: class="fragment" data-fragment-index="4" -->
 
 ---
 
+# Recap
+
+- Consistency              <!-- .element: class="fragment" data-fragment-index="1" -->
+- User options             <!-- .element: class="fragment" data-fragment-index="2" -->
+- Authoring                <!-- .element: class="fragment" data-fragment-index="3" -->
+
+---
+
 <!-- Presenter: JC -->
+
 <!-- .slide: data-background="images/section-background.png" -->
 
 # Widget Framework
