@@ -11,10 +11,9 @@
 # Agenda
 
 - About Widgets
+- Theming
 - Widget framework
-- Widget Theming
-- CODE!
-- Tips & tricks
+- Putting it all together
 
 ---
 
