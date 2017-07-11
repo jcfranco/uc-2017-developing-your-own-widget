@@ -160,9 +160,9 @@
 
 - Lifecycle         <!-- .element: class="fragment" data-fragment-index="1" -->
 - API consistency    <!-- .element: class="fragment" data-fragment-index="2" -->
-  - Properties      <!-- .element: class="fragment" data-fragment-index="3" -->
-  - Methods         <!-- .element: class="fragment" data-fragment-index="3" -->
-  - Events          <!-- .element: class="fragment" data-fragment-index="3" -->
+  - Unified object constructor          <!-- .element: class="fragment" data-fragment-index="3" -->
+  - Properties                          <!-- .element: class="fragment" data-fragment-index="4" -->
+  - Watching                            <!-- .element: class="fragment" data-fragment-index="5" -->
 
 ---
 
@@ -205,13 +205,18 @@ render() {
 - Typed JavaScript <!-- .element: class="fragment" data-fragment-index="1" -->
 
 ```ts
-let view: MapView | SceneView;
+type PresenterName = "Matt" | "JC";
 
-// later...
+interface Person {
+  name: string;
+}
 
-// TS2322: Type '"not-a-view"' is not assignable
-// to type 'MapView | SceneView'.
-view = "not-a-view";
+interface Presenter extends Person {
+  name: PresenterName;
+}
+
+// TS2322: Type '{ name: "Alan" };' is not assignable to type 'Presenter'.
+const myPresenter: Presenter = { name: "Alan" };
 ```
 <!-- .element: class="fragment hidden" data-fragment-index="2" -->
 
@@ -251,7 +256,7 @@ class Example {
 # Defining a class
 
 ```ts
- /// <amd-dependency path="esri/core/tsSupport/declareExtendsHelper" name="__extends" />
+/// <amd-dependency path="esri/core/tsSupport/declareExtendsHelper" name="__extends" />
 /// <amd-dependency path="esri/core/tsSupport/decorateHelper" name="__decorate" />
 
 import { declared, subclass } from "esri/core/accessorSupport/decorators";
@@ -276,7 +281,7 @@ export = MyClass;
 @subclass("MyClass")
 class MyClass extends declared(Base) {
 
-  // adding variable `_foo` 
+  // adds variable `_foo` 
   _foo: Foo = new Foo();
   
 }
@@ -294,7 +299,7 @@ class MyClass extends declared(Base) {
 @subclass("MyClass")
 class MyClass extends declared(Base) {
 
-  // adding property `foo` 
+  // adds property `foo` 
   @property()
   foo: Foo = new Foo();
   
@@ -313,7 +318,7 @@ class MyClass extends declared(Base) {
 @subclass("MyClass")
 class MyClass extends declared(Base) {
 
-  // adding method `bar` 
+  // adds method `bar` 
   bar(): string {
     return this._getText();
   }
@@ -333,14 +338,13 @@ class MyClass extends declared(Base) {
 
 - @subclass + declared      <!-- .element: class="fragment" data-fragment-index="1" -->
 - @property                 <!-- .element: class="fragment" data-fragment-index="2" -->
-  - auto-casting            <!-- .element: class="fragment" data-fragment-index="3" -->
-  - getter/setter           <!-- .element: class="fragment" data-fragment-index="4" -->
-  - computed                <!-- .element: class="fragment" data-fragment-index="5" -->
-  - read-only               <!-- .element: class="fragment" data-fragment-index="6" -->
-  - aliasing                <!-- .element: class="fragment" data-fragment-index="7" -->
-- @aliasOf                  <!-- .element: class="fragment" data-fragment-index="8" -->
-- @renderable               <!-- .element: class="fragment" data-fragment-index="9" -->
-- @accessibleHandler        <!-- .element: class="fragment" data-fragment-index="10" -->
+  - autocast                <!-- .element: class="fragment" data-fragment-index="3" -->
+  - computed                <!-- .element: class="fragment" data-fragment-index="4" -->
+  - read-only               <!-- .element: class="fragment" data-fragment-index="5" -->
+  - aliased                 <!-- .element: class="fragment" data-fragment-index="6" -->
+- @aliasOf                  <!-- .element: class="fragment" data-fragment-index="7" -->
+- @renderable               <!-- .element: class="fragment" data-fragment-index="8" -->
+- @accessibleHandler        <!-- .element: class="fragment" data-fragment-index="9" -->
 
 ---
 
