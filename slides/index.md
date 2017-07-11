@@ -411,7 +411,7 @@ class MyClass extends declared(Base) {
 
 # Use the source, Luke
 
-## [esriurl.com/buildwidgets-uc2017](http://esriurl.com/buildwidgets-uc2017)
+## [esriurl.com/buildwidgetsuc2017](http://esriurl.com/buildwidgetsuc2017)
 
 ---
 
