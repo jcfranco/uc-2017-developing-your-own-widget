@@ -296,7 +296,7 @@ Let's the UI aspect for our widget.a ViewModel for our Magnifier widget. The Vie
     }
   
     magViewNode.classList.add(CSS.magnifierView);
-    this._enabledChange(this.enabled); // needed?
+    this._enabledChange(this.enabled);
     viewNode.insertBefore(magViewNode, this.view.ui.container);
     this.center();
   }

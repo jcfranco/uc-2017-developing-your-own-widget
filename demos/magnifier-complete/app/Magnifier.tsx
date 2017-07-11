@@ -245,7 +245,7 @@ class Magnifier extends declared(Widget) {
     }
 
     magViewNode.classList.add(CSS.magnifierView);
-    this._enabledChange(this.enabled); // needed?
+    this._enabledChange(this.enabled);
     viewNode.insertBefore(magViewNode, this.view.ui.container);
     this.center();
   }
