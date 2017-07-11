@@ -114,15 +114,18 @@ import MapView = require("esri/views/MapView");
 import SceneView = require("esri/views/SceneView");
 
 import Layer = require("esri/layers/Layer");
-
-import ParentConstrainedMoveable = dojo.dnd.ParentConstrainedMoveable;
 ```
 
 #### Errors should be gone now. Let's work on our render method
 
-
 ```tsx
-render(): any {
+  //--------------------------------------------------------------------------
+  //
+  //  Public Methods
+  //
+  //--------------------------------------------------------------------------
+
+  render(): any {
     const handle = this.enabled ? (
       <div class={CSS.handle}
            />
@@ -146,7 +149,7 @@ const CSS = {
 We should now be able to see the beginnings of a magnifier, although not quite what we want. Let's make it moveable. We'll do this by using dojo/dnd/move
 
 ```tsx
-render(): any {
+  render(): any {
     const handle = this.enabled ? (
       <div class={CSS.handle}
       />
@@ -174,7 +177,9 @@ render(): any {
 
     this._moverMoved();
   }
+  ```
 
+  ```tsx
   //--------------------------------------------------------------------------
   //
   //  Private Methods
@@ -292,6 +297,15 @@ import watchUtils = require("esri/core/watchUtils");
   }
 ```
 
+```css
+const CSS = {
+  base: "esri-magnifier esri-widget",
+  handle: "esri-magnifier__handle",
+  magnifierView: "esri-magnifier__view",
+  magnifierViewHidden: "esri-magnifier__view--hidden"
+};
+```
+
 #### Great! We now have our magnifier working, but we can make it better.
 
 #### Let's make accessible!
@@ -344,6 +358,13 @@ import {
   RIGHT_ARROW,
   UP_ARROW,
 } from "dojo/keys";
+
+const supportedKeys = [
+  DOWN_ARROW,
+  LEFT_ARROW,
+  RIGHT_ARROW,
+  UP_ARROW
+];
 ```
 
 ```tsx
