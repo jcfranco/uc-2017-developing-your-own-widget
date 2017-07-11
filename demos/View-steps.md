@@ -2,9 +2,9 @@
 
 Let's the UI aspect for our widget.a ViewModel for our Magnifier widget. The ViewModel will extend `esri/core/Accessor` and be the brains of the widget.
 
-1. Open up `Magnifier.tsx`
+#### Open up `Magnifier.tsx`
 
-2. We'll add some boilerplate to create our widget class
+#### We'll add some boilerplate to create our widget class
 
   ```tsx
   /// <amd-dependency path="esri/core/tsSupport/declareExtendsHelper" name="__extends" />
@@ -26,68 +26,21 @@ Let's the UI aspect for our widget.a ViewModel for our Magnifier widget. The Vie
   export = Magnifier;
   ```
 
-3. Import other required classes (this snippet replaces current imports)
+#### Add variables
 
-  ```tsx
-  import {
-    aliasOf,
-    subclass,
-    property,
-    declared
-  } from "esri/core/accessorSupport/decorators";
-  
-  import {
-    tsx,
-    renderable,
-    accessibleHandler
-  } from "esri/widgets/support/widget";
-  
-  import {
-    DOWN_ARROW,
-    LEFT_ARROW,
-    RIGHT_ARROW,
-    UP_ARROW,
-  } from "dojo/keys";
-  
-  import watchUtils = require("esri/core/watchUtils");
-  
-  import Widget = require("esri/widgets/Widget");
-  import MagnifierViewModel = require("./Magnifier/MagnifierViewModel");
-  
-  import MapView = require("esri/views/MapView");
-  import SceneView = require("esri/views/SceneView");
-  
-  import Layer = require("esri/layers/Layer");
-  
-  import move = require("dojo/dnd/move");
-  import domGeometry = require("dojo/dom-geometry");
-  
-  import ParentConstrainedMoveable = dojo.dnd.ParentConstrainedMoveable;
-  
-  import * as i18n from "dojo/i18n!./Magnifier/nls/Magnifier";
-  ```
+ ```tsx
+ //--------------------------------------------------------------------------
+ //
+ //  Variables
+ //
+ //--------------------------------------------------------------------------
+ 
+ _moverNode: HTMLElement = null;
+ ```
 
-4. Add constants
+#### Add properties
 
-  ```tsx
-  const CSS = {
-    base: "esri-magnifier esri-widget",
-    handle: "esri-magnifier__handle",
-    magnifierView: "esri-magnifier__view",
-    magnifierViewHidden: "esri-magnifier__view--hidden"
-  };
-  
-  const supportedKeys = [
-    DOWN_ARROW,
-    LEFT_ARROW,
-    RIGHT_ARROW,
-    UP_ARROW
-  ];
-  ```
-
-5. Add properties our widget will need
-
-  ```tsx
+```tsx
   //--------------------------------------------------------------------------
   //
   //  Properties
@@ -138,30 +91,72 @@ Let's the UI aspect for our widget.a ViewModel for our Magnifier widget. The Vie
   viewModel: MagnifierViewModel = new MagnifierViewModel();
   ```
 
-  6. Add public methods we'll need to update the view at a location
+#### At this point, TypeScript shows us some errors because of missing references. Let's import those now.
 
-  ```tsx
-  //--------------------------------------------------------------------------
-  //
-  //  Public Methods
-  //
-  //--------------------------------------------------------------------------
+```tsx
+import {
+  aliasOf,
+  subclass,
+  property,
+  declared
+} from "esri/core/accessorSupport/decorators";
 
-  render(): any {
+import {
+  tsx,
+  renderable,
+  accessibleHandler
+} from "esri/widgets/support/widget";
+
+import Widget = require("esri/widgets/Widget");
+import MagnifierViewModel = require("./Magnifier/MagnifierViewModel");
+
+import MapView = require("esri/views/MapView");
+import SceneView = require("esri/views/SceneView");
+
+import Layer = require("esri/layers/Layer");
+
+import ParentConstrainedMoveable = dojo.dnd.ParentConstrainedMoveable;
+```
+
+#### Errors should be gone now. Let's work on our render method
+
+
+```tsx
+render(): any {
     const handle = this.enabled ? (
-      <div bind={this}
-        aria-label={i18n.keyboardHelp}
-        class={CSS.handle}
-        onkeydown={this._handleKeyDown}
-        tabIndex={0}
-        title={i18n.dragHelp} />
+      <div class={CSS.handle}
+           />
+    ) : null;
+
+    return (
+      <div class={CSS.base}>{handle}</div>
+    );
+  }
+```
+
+We keep all of our CSS in a lookup object, so let's define that too.
+
+```tsx
+const CSS = {
+  base: "esri-magnifier esri-widget",
+  handle: "esri-magnifier__handle"
+};
+```
+
+We should now be able to see the beginnings of a magnifier, although not quite what we want. Let's make it moveable. We'll do this by using dojo/dnd/move
+
+```tsx
+render(): any {
+    const handle = this.enabled ? (
+      <div class={CSS.handle}
+      />
     ) : null;
 
     return (
       <div afterCreate={this._setupMovable}
-        afterUpdate={this._setupMovable}
-        bind={this}
-        class={CSS.base}>{handle}</div>
+           afterUpdate={this._setupMovable}
+           bind={this}
+           class={CSS.base}>{handle}</div>
     );
   }
 
@@ -179,19 +174,81 @@ Let's the UI aspect for our widget.a ViewModel for our Magnifier widget. The Vie
 
     this._moverMoved();
   }
-  ```
 
-  7. Now we'll need to setup our widget's lifecycle and watch certain properties for changes
+  //--------------------------------------------------------------------------
+  //
+  //  Private Methods
+  //
+  //--------------------------------------------------------------------------
 
-  8. Add Lifecycle
+  private _moverMoved(): void {
+    if (!this._moverNode) {
+      return;
+    }
 
-  ```tsx
+    const marginBox = domGeometry.getMarginBox(this._moverNode);
+    const { x, y } = domGeometry.position(this._moverNode);
+
+    this._updateClipPath(`${marginBox.l}px`, `${marginBox.t}px`);
+
+    this.viewModel.updateView({ x, y });
+  }
+
+  private _destroyMover(): void {
+    if (!this.mover) {
+      return;
+    }
+
+    this.mover.destroy();
+    this._set("mover", null);
+  }
+
+  private _setupMovable(element: HTMLElement): void {
+    if (this.mover) {
+      return;
+    }
+
+    this._moverNode = element;
+
+    this.center();
+
+    this._set("mover", new move.parentConstrainedMoveable(element, {
+      area: "content",
+      within: true
+    } as any));
+  }
+
+  private _updateClipPath(left: string, top: string): void {
+    const magViewSurface = this.get<HTMLElement>("viewModel.magnifierView.surface");
+    const handleNode = this._moverNode.children[0];
+    const { w: handleWidth } = domGeometry.position(handleNode);
+    const clipRadius = handleWidth / 2;
+    const clipPath = this.enabled ? `circle(${clipRadius}px at ${left} ${top})` : "none";
+
+    magViewSurface.style.clipPath = clipPath;
+  }
+```
+
+```tsx
+import move = require("dojo/dnd/move");
+import domGeometry = require("dojo/dom-geometry");
+
+import ParentConstrainedMoveable = dojo.dnd.ParentConstrainedMoveable;
+```
+
+#### Placing magnified view in the magnifier.
+
+```tsx
+import watchUtils = require("esri/core/watchUtils");
+```
+
+```tsx
   //--------------------------------------------------------------------------
   //
   //  Lifecycle
   //
   //--------------------------------------------------------------------------
-  
+
   postInitialize() {
     this.own([
       watchUtils.init(this, "viewModel.magnifierView", magnifierView => this._magnifierViewChange(magnifierView)),
@@ -199,109 +256,57 @@ Let's the UI aspect for our widget.a ViewModel for our Magnifier widget. The Vie
       watchUtils.on(this, "mover", "Move", () => this._moverMoved())
     ]);
   }
-  
+
   destroy() {
     this._destroyMover();
   }
-  ```
+```
 
-  9. Add variables
-
-  ```tsx
-  //--------------------------------------------------------------------------
-  //
-  //  Variables
-  //
-  //--------------------------------------------------------------------------
-  
-  _moverNode: HTMLElement = null;
-  ```
-
-  10. Lastly, we'll need to add the actual brain work of our widget in private methods.
-
-  ```tsx
-  //--------------------------------------------------------------------------
-  //
-  //  Private Methods
-  //
-  //--------------------------------------------------------------------------
-  
-  private _moverMoved(): void {
-    if (!this._moverNode) {
-      return;
-    }
-  
-    const marginBox = domGeometry.getMarginBox(this._moverNode);
-    const { x, y } = domGeometry.position(this._moverNode);
-  
-    this._updateClipPath(`${marginBox.l}px`, `${marginBox.t}px`);
-  
-    this.viewModel.updateView({ x, y });
-  }
-  
-  private _destroyMover(): void {
-    if (!this.mover) {
-      return;
-    }
-  
-    this.mover.destroy();
-    this._set("mover", null);
-  }
-  
-  private _setupMovable(element: HTMLElement): void {
-    if (this.mover) {
-      return;
-    }
-  
-    this._moverNode = element;
-  
-    this.center();
-  
-    this._set("mover", new move.parentConstrainedMoveable(element, {
-      area: "content",
-      within: true
-    } as any));
-  }
-  
-  private _enabledChange(enabled: boolean): void {
-    const magViewNode = this.get<HTMLElement>("viewModel.magnifierView.container");
-  
-    if (!magViewNode) {
-      return;
-    }
-  
-    magViewNode.classList.toggle(CSS.magnifierViewHidden, !enabled);
-  }
-  
-  private _updateClipPath(left: string, top: string): void {
-    const magViewSurface = this.get<HTMLElement>("viewModel.magnifierView.surface");
-    const handleNode = this._moverNode.children[0];
-    const { w: handleWidth } = domGeometry.position(handleNode);
-    const clipRadius = handleWidth / 2;
-    const clipPath = this.enabled ? `circle(${clipRadius}px at ${left} ${top})` : "none";
-  
-    magViewSurface.style.clipPath = clipPath;
-  }
-  
+```tsx
   private _magnifierViewChange(magView: MapView | SceneView): void {
     if (!magView) {
       return;
     }
-  
+
     const magViewNode = magView.get<HTMLElement>("container");
     const viewNode = this.get<HTMLElement>("view.root");
-  
+
     if (!viewNode) {
       return;
     }
-  
+
     magViewNode.classList.add(CSS.magnifierView);
     this._enabledChange(this.enabled);
     viewNode.insertBefore(magViewNode, this.view.ui.container);
     this.center();
   }
-  
-  private _handleKeyDown(event: KeyboardEvent): void {
+
+  private _enabledChange(enabled: boolean): void {
+    const magViewNode = this.get<HTMLElement>("viewModel.magnifierView.container");
+
+    if (!magViewNode) {
+      return;
+    }
+
+    magViewNode.classList.toggle(CSS.magnifierViewHidden, !enabled);
+  }
+```
+
+#### Great! We now have our magnifier working, but we can make it better.
+
+#### Let's make accessible!
+
+```tsx
+<div bind={this}
+     aria-label={i18n.keyboardHelp}
+     class={CSS.handle}
+     onkeydown={this._handleKeyDown}
+     tabIndex={0}
+     title={i18n.dragHelp} />
+```
+
+```tsx
+private _handleKeyDown(event: KeyboardEvent): void {
     const { keyCode, shiftKey } = event;
   
     if (supportedKeys.indexOf(keyCode) === -1) {
@@ -330,4 +335,17 @@ Let's the UI aspect for our widget.a ViewModel for our Magnifier widget. The Vie
     event.preventDefault();
     event.stopPropagation();
   }
-  ```
+```
+
+```tsx
+import {
+  DOWN_ARROW,
+  LEFT_ARROW,
+  RIGHT_ARROW,
+  UP_ARROW,
+} from "dojo/keys";
+```
+
+```tsx
+import * as i18n from "dojo/i18n!./Magnifier/nls/Magnifier";
+```
